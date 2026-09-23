@@ -341,7 +341,22 @@ class FirebaseWellnessRepository(
                 onError(error)
             }
     }
-
+    fun loadAudioSessions(
+        userId: String,
+        onSuccess: (Int) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        firestore
+            .collection(FirestoreCollections.AUDIO_SESSION)
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                onSuccess(snapshot.size())
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
     fun loadAudioContent(): Task<QuerySnapshot> =
         firestore.collection(FirestoreCollections.AUDIO_CONTENT)
             .whereEqualTo("active", true)

@@ -1,18 +1,21 @@
 package com.example.insy7315_wil_.ui.screens.admin
 
 import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
-import com.example.insy7315_wil_.R
-import com.example.insy7315_wil_.ui.screens.redirectNonAdminFromAdminContent
-import com.example.insy7315_wil_.data.`Data classes`.FirebaseWellnessRepository
 import android.net.Uri
-import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.material.button.MaterialButton
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.example.insy7315_wil_.ui.widget.SgulaTextFieldView
+
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+
+import com.google.android.material.button.MaterialButton
+
+import com.example.insy7315_wil_.R
+import com.example.insy7315_wil_.data.`Data classes`.FirebaseWellnessRepository
+import com.example.insy7315_wil_.ui.screens.redirectNonAdminFromAdminContent
 import com.example.insy7315_wil_.ui.widget.SgulaDropdownFieldView
+import com.example.insy7315_wil_.ui.widget.SgulaTextFieldView
 class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
 
     private var selectedAudioUri: Uri? = null
