@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="140dp"
+    android:viewportWidth="120"
+    android:viewportHeight="140">
+
+    <group android:rotation="-58" android:pivotX="41" android:pivotY="76">
+        <path
+            android:fillColor="@color/sgula_plant_700"
+            android:pathData="M34,76 A7,15 0 1,0 48,76 A7,15 0 1,0 34,76 Z" />
+    </group>
+
+    <group android:rotation="58" android:pivotX="79" android:pivotY="76">
+        <path
+            android:fillColor="@color/sgula_plant_700"
+            android:pathData="M72,76 A7,15 0 1,0 86,76 A7,15 0 1,0 72,76 Z" />
+    </group>
+
+    <group android:rotation="-38" android:pivotX="46" android:pivotY="68">
+        <path
+            android:fillColor="@color/sgula_plant_600"
+            android:pathData="M38,68 A8,18 0 1,0 54,68 A8,18 0 1,0 38,68 Z" />
+    </group>
+
+    <group android:rotation="38" android:pivotX="74" android:pivotY="68">
+        <path
+            android:fillColor="@color/sgula_plant_600"
+            android:pathData="M66,68 A8,18 0 1,0 82,68 A8,18 0 1,0 66,68 Z" />
+    </group>
+
+    <group android:rotation="-16" android:pivotX="52" android:pivotY="58">
+        <path
+            android:fillColor="@color/sgula_plant_500"
+            android:pathData="M44,58 A8,20 0 1,0 60,58 A8,20 0 1,0 44,58 Z" />
+    </group>
+
+    <group android:rotation="16" android:pivotX="68" android:pivotY="58">
+        <path
+            android:fillColor="@color/sgula_plant_300"
+            android:pathData="M60,58 A8,20 0 1,0 76,58 A8,20 0 1,0 60,58 Z" />
+    </group>
+
+    <path
+        android:fillColor="@color/sgula_plant_100"
+        android:pathData="M53,50 A7,18 0 1,0 67,50 A7,18 0 1,0 53,50 Z" />
+
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M55,30 A5,5 0 1,0 65,30 A5,5 0 1,0 55,30 Z" />
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M48.5,34 A5,5 0 1,0 58.5,34 A5,5 0 1,0 48.5,34 Z" />
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M61.5,34 A5,5 0 1,0 71.5,34 A5,5 0 1,0 61.5,34 Z" />
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M51,40 A5,5 0 1,0 61,40 A5,5 0 1,0 51,40 Z" />
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M59,40 A5,5 0 1,0 69,40 A5,5 0 1,0 59,40 Z" />
+    <path
+        android:fillColor="@color/sgula_accent_100"
+        android:pathData="M56,35.5 A4,4 0 1,0 64,35.5 A4,4 0 1,0 56,35.5 Z" />
+
+    <path
+        android:fillColor="@color/sgula_ink_700"
+        android:pathData="M37,89 A23,6 0 1,0 83,89 A23,6 0 1,0 37,89 Z" />
+
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M39,88 L81,88 A6,6 0 0,1 87,94 A6,6 0 0,1 81,100 L39,100 A6,6 0 0,1 33,94 A6,6 0 0,1 39,88 Z" />
+
+    <path
+        android:fillColor="@color/sgula_accent_600"
+        android:pathData="M38,100 L82,100 L77,128 Q75.5,134 69,134 L51,134 Q44.5,134 43,128 Z" />
+</vector>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="sgula_plum_50">#FFF4EEF0</color>
+    <color name="sgula_plum_100">#FFE7D9DD</color>
+    <color name="sgula_plum_200">#FFD0B7BF</color>
+    <color name="sgula_plum_300">#FFB3919D</color>
+    <color name="sgula_plum_400">#FF93707E</color>
+    <color name="sgula_plum_500">#FF765565</color>
+    <color name="sgula_plum_600">#FF5F4351</color>
+    <color name="sgula_plum_700">#FF4C3641</color>
+    <color name="sgula_plum_800">#FF3C2B33</color>
+    <color name="sgula_plum_900">#FF2E2128</color>
+
+    <color name="sgula_cream_0">#FFFBF8F2</color>
+    <color name="sgula_cream_50">#FFF6F1E8</color>
+    <color name="sgula_surface">#FFFFFFFF</color>
+    <color name="sgula_warm_gray_100">#FFECE6DA</color>
+    <color name="sgula_warm_gray_200">#FFDDD4C2</color>
+    <color name="sgula_warm_gray_300">#FFC3B8A4</color>
+    <color name="sgula_warm_gray_400">#FFA3947D</color>
+
+    <color name="sgula_ink_900">#FF2E2A22</color>
+    <color name="sgula_ink_700">#FF55503F</color>
+    <color name="sgula_ink_500">#FF7D7561</color>
+    <color name="sgula_ink_300">#FFA89F8A</color>
+
+    <color name="sgula_accent_100">#FFFBE6CF</color>
+    <color name="sgula_accent_300">#FFF0BD82</color>
+    <color name="sgula_accent_500">#FFE0954A</color>
+    <color name="sgula_accent_600">#FFC17835</color>
+    <color name="sgula_accent_700">#FF9C5E29</color>
+
+    <color name="sgula_danger_100">#FFF4DCD8</color>
+    <color name="sgula_danger_300">#FFDBA39B</color>
+    <color name="sgula_danger_500">#FFB6584A</color>
+    <color name="sgula_danger_600">#FF954739</color>
+    <color name="sgula_danger_700">#FF7A3A2F</color>
+
+    <color name="sgula_plant_100">#FFA9BC93</color>
+    <color name="sgula_plant_300">#FF8FA97C</color>
+    <color name="sgula_plant_500">#FF74905F</color>
+    <color name="sgula_plant_600">#FF5C7549</color>
+    <color name="sgula_plant_700">#FF4A5F3B</color>
+
+    <color name="sgula_background">@color/sgula_cream_0</color>
+    <color name="sgula_surface_sunken">@color/sgula_cream_50</color>
+    <color name="sgula_border">@color/sgula_warm_gray_200</color>
+
+    <color name="sgula_primary">@color/sgula_plum_500</color>
+    <color name="sgula_primary_hover">@color/sgula_plum_600</color>
+    <color name="sgula_primary_active">@color/sgula_plum_700</color>
+    <color name="sgula_primary_soft">@color/sgula_plum_100</color>
+
+    <color name="sgula_accent">@color/sgula_accent_500</color>
+    <color name="sgula_accent_hover">@color/sgula_accent_600</color>
+    <color name="sgula_accent_soft">@color/sgula_accent_100</color>
+
+    <color name="sgula_danger">@color/sgula_danger_500</color>
+    <color name="sgula_danger_hover">@color/sgula_danger_600</color>
+    <color name="sgula_danger_soft">@color/sgula_danger_100</color>
+
+    <color name="sgula_text">@color/sgula_ink_900</color>
+    <color name="sgula_text_secondary">@color/sgula_ink_700</color>
+    <color name="sgula_text_tertiary">@color/sgula_ink_500</color>
+    <color name="sgula_text_disabled">@color/sgula_ink_300</color>
+    <color name="sgula_text_on_primary">#FFFFFFFF</color>
+
+    <color name="sgula_focus_ring">#FF3D6FA8</color>
+    <color name="sgula_scrim">#732E2A22</color>
+    <color name="sgula_shadow">#FF3C321E</color>
+
+    <color name="sgula_transparent">#00000000</color>
+</resources>

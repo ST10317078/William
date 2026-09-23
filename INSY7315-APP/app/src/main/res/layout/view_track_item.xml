@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.insy7315_wil_.ui.widget.SgulaTrackArtView
+        android:id="@+id/track_art"
+        android:layout_width="@dimen/sgula_track_art"
+        android:layout_height="@dimen/sgula_track_art" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/sgula_space_4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/track_title"
+            style="@style/Widget.Sgula.Text.QuizOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Evening wind down" />
+
+        <TextView
+            android:id="@+id/track_duration"
+            style="@style/Widget.Sgula.Text.BodySmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sgula_text_tertiary"
+            tools:text="12:04" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/track_favourite"
+        style="@style/Widget.Sgula.IconToggle"
+        android:layout_marginStart="@dimen/sgula_space_4"
+        android:src="@drawable/sgula_star"
+        android:tint="@color/sgula_star_tint"
+        android:contentDescription="@string/sgula_favourite_add"
+        tools:ignore="UseAppTint" />
+</merge>

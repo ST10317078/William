@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingTop="@dimen/sgula_space_5"
+    android:paddingBottom="@dimen/sgula_space_6"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily broadcast" />
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A short recording from your therapist, every morning." />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Sgula.Card.Raised"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.Eyebrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today · 5 August" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.H2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_2"
+                    android:text="Managing Anxiety" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.BodySmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_1"
+                    android:textColor="@color/sgula_text_tertiary"
+                    android:text="Anat Casey · 08:30" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_4"
+                    android:text="Anxiety tends to speak in absolutes. This morning we look at how to catch that voice early, work out what it is actually asking for, and come back to something steadier before the day runs away with you." />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/broadcast_play"
+                    style="@style/Widget.Sgula.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_5"
+                    android:text="Play broadcast" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/broadcast_history"
+            style="@style/Widget.Sgula.Button.Ghost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4"
+            android:text="Past broadcasts" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

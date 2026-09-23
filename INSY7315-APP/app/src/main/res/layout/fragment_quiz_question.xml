@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingTop="@dimen/sgula_space_5"
+    android:paddingBottom="@dimen/sgula_space_6"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How are you feeling today?" />
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose the answer that feels closest right now. We will match the meditation for you." />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Sgula.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Step 1 of 1" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/quiz_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_2"
+                    android:progress="100"
+                    android:max="100" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Sgula.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your check-in" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardBody"
+                    android:id="@+id/quiz_selected_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/sgula_space_4"
+                    android:text="Tap one answer to continue." />
+
+                <com.example.insy7315_wil_.ui.widget.SgulaQuizOptionsView
+                    android:id="@+id/quiz_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:sgulaEntries="@array/sgula_wellness_quiz_answers" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.SectionNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_4"
+                    android:text="A single answer unlocks your matched meditation." />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/quiz_continue_button"
+                    style="@style/Widget.Sgula.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_2"
+                    android:enabled="false"
+                    android:text="See result" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

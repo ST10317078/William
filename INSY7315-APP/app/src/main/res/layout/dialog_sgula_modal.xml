@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modal_scrim"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/sgula_space_4">
+
+    <LinearLayout
+        android:id="@+id/modal_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/sgula_modal_card_bg"
+        android:elevation="@dimen/sgula_elevation_lg"
+        android:outlineAmbientShadowColor="@color/sgula_shadow"
+        android:outlineSpotShadowColor="@color/sgula_shadow"
+        android:padding="@dimen/sgula_space_6"
+        app:layout_constraintWidth_max="@dimen/sgula_modal_max_width"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/modal_icon"
+            style="@style/Widget.Sgula.Text.H1"
+            android:layout_width="@dimen/sgula_modal_icon"
+            android:layout_height="@dimen/sgula_modal_icon"
+            android:background="@drawable/sgula_modal_icon_bg"
+            android:gravity="center"
+            android:textColor="@color/sgula_plum_600"
+            tools:text="!" />
+
+        <TextView
+            android:id="@+id/modal_title"
+            style="@style/Widget.Sgula.Text.H2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4"
+            android:gravity="center_horizontal"
+            tools:text="Delete this entry?" />
+
+        <TextView
+            android:id="@+id/modal_body"
+            style="@style/Widget.Sgula.Text.BodySecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_2"
+            android:gravity="center_horizontal"
+            tools:text="This can't be undone." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_5"
+            android:orientation="vertical">
+
+            <!-- stacked because side by side there was only room for about 8 letters per button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/modal_confirm"
+                style="@style/Widget.Sgula.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Confirm" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/modal_confirm_destructive"
+                style="@style/Widget.Sgula.Button.Destructive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:text="Delete" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/modal_dismiss"
+                style="@style/Widget.Sgula.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sgula_space_3"
+                android:visibility="gone"
+                tools:text="Cancel"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

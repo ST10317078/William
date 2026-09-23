@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Sgula" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/sgula_primary</item>
+        <item name="colorOnPrimary">@color/sgula_text_on_primary</item>
+        <item name="colorPrimaryContainer">@color/sgula_primary_soft</item>
+        <item name="colorOnPrimaryContainer">@color/sgula_plum_800</item>
+
+        <item name="colorSecondary">@color/sgula_accent</item>
+        <item name="colorOnSecondary">@color/sgula_text_on_primary</item>
+        <item name="colorSecondaryContainer">@color/sgula_accent_soft</item>
+        <item name="colorOnSecondaryContainer">@color/sgula_accent_700</item>
+
+        <item name="android:colorBackground">@color/sgula_background</item>
+        <item name="colorOnBackground">@color/sgula_text</item>
+        <item name="colorSurface">@color/sgula_surface</item>
+        <item name="colorOnSurface">@color/sgula_text</item>
+        <item name="colorSurfaceVariant">@color/sgula_surface_sunken</item>
+        <item name="colorOnSurfaceVariant">@color/sgula_text_secondary</item>
+
+        <item name="colorError">@color/sgula_danger</item>
+        <item name="colorOnError">@color/sgula_text_on_primary</item>
+        <item name="colorErrorContainer">@color/sgula_danger_soft</item>
+        <item name="colorOnErrorContainer">@color/sgula_danger_700</item>
+
+        <item name="colorOutline">@color/sgula_border</item>
+        <item name="colorOutlineVariant">@color/sgula_warm_gray_100</item>
+        <item name="android:colorEdgeEffect">@color/sgula_primary</item>
+
+        <item name="android:windowBackground">@color/sgula_background</item>
+        <item name="android:textViewStyle">@style/Widget.Sgula.Text</item>
+    </style>
+
+    <style name="Base.Theme.INSY7315_WIL_" parent="Theme.Sgula" />
+
+    <style name="Theme.INSY7315_WIL_" parent="Base.Theme.INSY7315_WIL_" />
+</resources>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingTop="@dimen/sgula_space_5"
+    android:paddingBottom="@dimen/sgula_space_6"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/succulent_subtitle"
+            style="@style/Widget.Sgula.Text.PageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your succulent" />
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Growing with you since 1 May." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_5"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="@dimen/sgula_plant_scene_lg"
+                android:layout_height="@dimen/sgula_plant_scene_lg"
+                android:background="@drawable/sgula_plant_scene_bg">
+
+                <ImageView
+                    android:id="@+id/succulent_hero"
+                    android:layout_width="@dimen/sgula_plant_hero_lg"
+                    android:layout_height="@dimen/sgula_plant_hero_lg"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_plant_sprout" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/succulent_stage_name"
+                style="@style/Widget.Sgula.Text.PlantStageName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sgula_space_3"
+                android:text="Sprout" />
+
+            <TextView
+                android:id="@+id/succulent_points_summary"
+                style="@style/Widget.Sgula.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="240 pts, 60 more to reach Growing" />
+
+            <TextView
+                android:id="@+id/succulent_status_badge"
+                style="@style/Widget.Sgula.StatusBadge.Active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sgula_space_3"
+                android:text="Watered today" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/succulent_growth_bar"
+            style="@style/Widget.Sgula.GrowBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4"
+            android:progress="80" />
+
+        <com.example.insy7315_wil_.ui.widget.SgulaPlantStagesView
+            android:id="@+id/succulent_stage_tracker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_5"
+            app:sgulaStageIndex="1" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Sgula.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="How your plant grows" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Mood check-in" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.PointsToast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+5 points" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_3"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Journal entry" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.PointsToast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+10 points" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_3"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Meditation quiz" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.PointsToast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+15 points" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_3"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Audio session" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.PointsToast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+20 points" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Sgula.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wilt warning"
+                    android:textColor="@color/sgula_danger" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="If your plant isn't watered for 7 days, it wilts. Any activity waters it and brings it back to its stage." />
+
+                <com.example.insy7315_wil_.ui.widget.SgulaPlantStagesView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_4"
+                    app:sgulaStageIndex="1"
+                    app:sgulaWilted="true" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

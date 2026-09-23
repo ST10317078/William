@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="140dp"
+    android:viewportWidth="120"
+    android:viewportHeight="140">
+
+    <path
+        android:fillColor="@color/sgula_plant_100"
+        android:pathData="M55,82 A5,5 0 1,0 65,82 A5,5 0 1,0 55,82 Z" />
+
+    <path
+        android:fillColor="@color/sgula_ink_700"
+        android:pathData="M37,89 A23,6 0 1,0 83,89 A23,6 0 1,0 37,89 Z" />
+
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M39,88 L81,88 A6,6 0 0,1 87,94 A6,6 0 0,1 81,100 L39,100 A6,6 0 0,1 33,94 A6,6 0 0,1 39,88 Z" />
+
+    <path
+        android:fillColor="@color/sgula_accent_600"
+        android:pathData="M38,100 L82,100 L77,128 Q75.5,134 69,134 L51,134 Q44.5,134 43,128 Z" />
+</vector>

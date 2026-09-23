@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <View
+        android:id="@+id/tab_bar_dot"
+        android:layout_width="@dimen/sgula_nav_dot"
+        android:layout_height="@dimen/sgula_nav_dot"
+        android:background="@drawable/sgula_dot_10"
+        android:backgroundTint="@color/sgula_tab_bar_dot"
+        android:duplicateParentState="true" />
+
+    <ImageView
+        android:id="@+id/tab_bar_icon"
+        android:layout_width="@dimen/sgula_icon"
+        android:layout_height="@dimen/sgula_icon"
+        android:tint="@color/sgula_tab_bar_label"
+        android:duplicateParentState="true"
+        android:visibility="gone"
+        android:importantForAccessibility="no"
+        tools:ignore="UseAppTint" />
+
+    <TextView
+        android:id="@+id/tab_bar_label"
+        style="@style/Widget.Sgula.Text.TabBarLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_1"
+        android:duplicateParentState="true"
+        tools:text="Home" />
+</LinearLayout>

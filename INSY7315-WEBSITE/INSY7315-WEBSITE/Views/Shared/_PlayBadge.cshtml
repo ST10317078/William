@@ -1,0 +1,11 @@
+@inject Microsoft.Extensions.Options.IOptions<SiteOptions> SiteOptions
+@{
+    var site = SiteOptions.Value;
+}
+<a class="btn btn-play" href="@site.PlayStoreUrl">
+    <svg aria-hidden="true"><use href="#icon-google-play" /></svg>
+    <span>
+        <small>@(site.PlayStoreAvailable ? "Get it on" : "Coming soon to")</small>
+        <strong>Google Play</strong>
+    </span>
+</a>

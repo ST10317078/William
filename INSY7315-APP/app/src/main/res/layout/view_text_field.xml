@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/field_label_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/field_label"
+            style="@style/Widget.Sgula.Text.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/field_input"
+            tools:text="Email address" />
+
+        <TextView
+            android:id="@+id/field_optional"
+            style="@style/Widget.Sgula.Text.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sgula_field_optional"
+            android:textColor="@color/sgula_text_tertiary"
+            android:textFontWeight="400"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/field_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_2"
+        android:background="@drawable/sgula_field_background"
+        android:minHeight="@dimen/sgula_min_touch_target"
+        android:paddingLeft="@dimen/sgula_field_h_padding"
+        android:paddingRight="@dimen/sgula_field_h_padding"
+        android:paddingTop="@dimen/sgula_field_v_padding"
+        android:paddingBottom="@dimen/sgula_field_v_padding"
+        android:textAppearance="@style/TextAppearance.Sgula.Body"
+        android:includeFontPadding="false"
+        android:lineHeight="24sp"
+        android:textColorHint="@color/sgula_text_tertiary"
+        android:textCursorDrawable="@drawable/sgula_text_cursor"
+        android:gravity="center_vertical"
+        android:inputType="text"
+        tools:hint="you@example.com" />
+
+    <TextView
+        android:id="@+id/field_helper"
+        style="@style/Widget.Sgula.Text.BodySmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_2"
+        android:textAppearance="@style/TextAppearance.Sgula.FieldHint"
+        android:visibility="gone"
+        tools:text="We'll never share this."
+        tools:visibility="visible" />
+</merge>

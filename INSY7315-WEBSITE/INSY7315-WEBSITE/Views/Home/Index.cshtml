@@ -1,0 +1,450 @@
+@inject Microsoft.Extensions.Options.IOptions<SiteOptions> SiteOptions
+@{
+    ViewData["Title"] = "A calm space between your sessions";
+    var site = SiteOptions.Value;
+}
+
+<section class="hero">
+    <div class="shell">
+        <div>
+            <p class="eyebrow">Growth &amp; Development with Anat Casey</p>
+            <h1>A calm space between your sessions.</h1>
+            <p class="hero-lead">Sgula keeps your therapy going on the days you are not in the room. A short broadcast every morning, meditations to sit under, and gentle ways to notice how you are doing.</p>
+            <div class="hero-meta">
+                <span class="badge">Android</span>
+                <span>For clients of Sgula Growth &amp; Development</span>
+            </div>
+            <div class="hero-actions">
+                @await Html.PartialAsync("_PlayBadge")
+                <a class="btn btn-secondary" href="#inside">See what is inside</a>
+            </div>
+            <p class="hero-note">Sgula is currently a working prototype built for INSY7315. The Play Store listing goes live with the first release.</p>
+        </div>
+        <div class="hero-art">
+            <img class="screenshot" src="~/img/home.png" alt="The Sgula home screen showing a twelve day streak, a sprouting succulent at 240 points, the daily affirmation and quick actions" />
+        </div>
+    </div>
+</section>
+
+<section class="section section-sunken">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Why it exists</p>
+            <h2 class="section-title">The week between appointments is the hard part</h2>
+            <p class="section-note">Most of the work happens when nobody is watching. Sgula gives that stretch a shape, without turning your wellbeing into another thing to be perfect at.</p>
+        </div>
+        <div class="steps">
+            <div class="card">
+                <h3>Start with a voice you know</h3>
+                <p>Every morning there is a short recording from Anat waiting for you, on whatever the practice is working through that week.</p>
+            </div>
+            <div class="card">
+                <h3>Check in, in under a minute</h3>
+                <p>Pick a mood from one to five, add a note if you want to. That is the whole ask on a heavy day.</p>
+            </div>
+            <div class="card">
+                <h3>Watch it add up</h3>
+                <p>Every small thing you do waters a succulent. It is a quiet record of the effort you have been putting in.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="inside">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Inside the app</p>
+            <h2 class="section-title">Everything in one calm place</h2>
+            <p class="section-note">Five features, all built around the same idea. Nothing shouts, nothing counts down at you.</p>
+        </div>
+        <div class="pillars">
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-broadcast" /></svg></div>
+                <div>
+                    <h3>Daily broadcast</h3>
+                    <p>A short recording from your therapist, every morning, with the past weeks kept in one place.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-audio" /></svg></div>
+                <div>
+                    <h3>Audio library</h3>
+                    <p>White noise, nature and guided meditation, with a sleep timer that stops playback on its own.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-mood" /></svg></div>
+                <div>
+                    <h3>Mood check-in</h3>
+                    <p>One tap from rough to thriving, with an optional note and a history you can page back through.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-journal" /></svg></div>
+                <div>
+                    <h3>Private journal</h3>
+                    <p>A daily prompt to start you off and a proper editor for the days you have more to say.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-quiz" /></svg></div>
+                <div>
+                    <h3>Wellness quiz</h3>
+                    <p>One question about how today feels, and a meditation matched to the answer you gave.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-sunken">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Daily broadcast</p>
+            <h2 class="section-title">A short recording from your therapist, every morning</h2>
+            <p class="section-note">Anat records one piece of audio a day for the practice. It lands in the app before you are up, and it stays there.</p>
+        </div>
+        <div class="pillars">
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-broadcast" /></svg></div>
+                <div>
+                    <h3>Today</h3>
+                    <p>The date, the title, the time it went out and a paragraph on what it covers, so you know what you are walking into before you press play.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-audio" /></svg></div>
+                <div>
+                    <h3>Past broadcasts</h3>
+                    <p>Every previous morning is kept in a list. If one landed for you, it is still there next month.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-quiz" /></svg></div>
+                <div>
+                    <h3>Categories</h3>
+                    <p>Calm reset, grounding reset, unwind and release, focus and flow. The quiz uses the same categories to pick for you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="shell">
+        <div class="split split-flip">
+            <div>
+                <p class="eyebrow">Audio library and player</p>
+                <h2 class="section-title">Something to sit under while you settle</h2>
+                <p class="section-note">Three tabs, one player, and controls that assume you are trying to fall asleep rather than browse.</p>
+                <ul class="split-list">
+                    <li>White noise, nature and guided meditation, each in their own tab.</li>
+                    <li>Loop a track for as long as you need it.</li>
+                    <li>Star the sessions that work so they are easy to find again.</li>
+                    <li>A sleep timer at 15, 30 or 45 minutes, or an hour. Playback stops on its own when the timer runs out.</li>
+                    <li>Take the daily quiz and the player opens already loaded with a matched session.</li>
+                </ul>
+            </div>
+            <div class="split-art">
+                <img class="screenshot" src="~/img/player.png" alt="The Sgula player screen playing Soft static with the sleep timer options open" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-sunken">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Checking in</p>
+            <h2 class="section-title">Two ways to put the day somewhere</h2>
+            <p class="section-note">One takes ten seconds, the other takes as long as you want it to. Both count towards your plant.</p>
+        </div>
+        <div class="compare">
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-mood" /></svg></div>
+                <h3 class="card-title" style="margin-top: var(--space-4)">Mood check-in</h3>
+                <p class="card-body">Pick an emoji from one to five, add a note if you want, and save. One is rough, five is thriving.</p>
+                <ul>
+                    <li><svg><use href="#icon-check" /></svg><span>Optional note on any entry</span></li>
+                    <li><svg><use href="#icon-check" /></svg><span>History by week, month or year</span></li>
+                    <li><svg><use href="#icon-check" /></svg><span>Worth +5 points</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="tile-icon"><svg><use href="#icon-journal" /></svg></div>
+                <h3 class="card-title" style="margin-top: var(--space-4)">Journal</h3>
+                <p class="card-body">Write what felt steady today. The prompt is a gentle starting point, but you can take it anywhere.</p>
+                <ul>
+                    <li><svg><use href="#icon-check" /></svg><span>A new prompt each day</span></li>
+                    <li><svg><use href="#icon-check" /></svg><span>Bold, italics, lists and quotes</span></li>
+                    <li><svg><use href="#icon-check" /></svg><span>Worth +10 points</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Daily wellness quiz</p>
+            <h2 class="section-title">One question, one meditation</h2>
+            <p class="section-note">A quick check-in that turns how you feel today into a meditation recommendation, so you do not have to go looking through the library when you have the least patience for it.</p>
+        </div>
+        <div class="steps">
+            <div class="card">
+                <h3>Answer one question</h3>
+                <p>Calm, anxious, overwhelmed or motivated. That is the whole quiz.</p>
+            </div>
+            <div class="card">
+                <h3>See your recommendation</h3>
+                <p>A matched meditation category and the broadcast that goes with it.</p>
+            </div>
+            <div class="card">
+                <h3>Open the player</h3>
+                <p>Straight into the session, already loaded. Worth +15 points.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-sunken">
+    <div class="shell">
+        <div class="split">
+            <div>
+                <p class="eyebrow">Your succulent</p>
+                <h2 class="section-title">Something that grows with you</h2>
+                <p class="section-note">Instead of a streak counter shouting at you, Sgula gives you a plant. Every activity earns points, and points move it to its next stage.</p>
+                <table class="points">
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>Earns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mood check-in</td>
+                            <td>+5</td>
+                        </tr>
+                        <tr>
+                            <td>Journal entry</td>
+                            <td>+10</td>
+                        </tr>
+                        <tr>
+                            <td>Meditation quiz</td>
+                            <td>+15</td>
+                        </tr>
+                        <tr>
+                            <td>Audio session</td>
+                            <td>+20</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout">
+                    <h3>If life gets in the way</h3>
+                    <p>After seven days without activity your plant wilts. Any activity waters it and brings it straight back to its stage, so nothing you built is ever lost.</p>
+                </div>
+            </div>
+            <div class="split-art">
+                <img class="screenshot" src="~/img/succulent.png" alt="The Sgula succulent screen showing the Sprout stage, the five growth stages and the points each activity earns" />
+            </div>
+        </div>
+
+        <div class="stages">
+            <div class="stage stage-seed">
+                <div class="plant-scene"><img src="~/img/plants/seed.svg" alt="" /></div>
+                <p class="stage-name">Seed</p>
+                <p class="stage-note">0 to 99 points</p>
+            </div>
+            <div class="stage stage-sprout">
+                <div class="plant-scene"><img src="~/img/plants/sprout.svg" alt="" /></div>
+                <p class="stage-name">Sprout</p>
+                <p class="stage-note">From 100 points</p>
+            </div>
+            <div class="stage stage-growing">
+                <div class="plant-scene"><img src="~/img/plants/growing.svg" alt="" /></div>
+                <p class="stage-name">Growing</p>
+                <p class="stage-note">From 300 points</p>
+            </div>
+            <div class="stage stage-blooming">
+                <div class="plant-scene"><img src="~/img/plants/blooming.svg" alt="" /></div>
+                <p class="stage-name">Blooming</p>
+                <p class="stage-note">From 600 points</p>
+            </div>
+            <div class="stage stage-wilted">
+                <div class="plant-scene"><img src="~/img/plants/wilted.svg" alt="" /></div>
+                <p class="stage-name">Wilted</p>
+                <p class="stage-note">Seven days without activity</p>
+            </div>
+        </div>
+
+        <div class="quote">
+            <p class="eyebrow">Today's affirmation</p>
+            <p class="affirmation">"I am allowed to grow at my own pace."</p>
+            <p class="caption">A new one every morning, on the home screen.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Guest mode</p>
+            <h2 class="section-title">Have a listen before you sign up</h2>
+            <p class="section-note">You can open Sgula and go straight to the audio without an account. Making one is what turns it into something that remembers you.</p>
+        </div>
+        <div class="compare">
+            <div class="card">
+                <h3 class="card-title">Available to guests</h3>
+                <ul>
+                    <li><svg><use href="#icon-check" /></svg><span>Audio previews</span></li>
+                    <li><svg><use href="#icon-check" /></svg><span>White noise</span></li>
+                    <li><svg><use href="#icon-check" /></svg><span>Today's broadcasts</span></li>
+                </ul>
+            </div>
+            <div class="card compare-locked">
+                <h3 class="card-title">Unlocked with an account</h3>
+                <ul>
+                    <li><svg><use href="#icon-lock" /></svg><span>Journal entries</span></li>
+                    <li><svg><use href="#icon-lock" /></svg><span>Mood logging</span></li>
+                    <li><svg><use href="#icon-lock" /></svg><span>Your succulent, points and streaks</span></li>
+                </ul>
+                <p class="caption" style="margin-top: var(--space-4)">Guest progress is not saved.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-sunken">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Profile and settings</p>
+            <h2 class="section-title">The controls that matter</h2>
+            <p class="section-note">Short on purpose. Everything here is about what the app is allowed to do, not about configuring it.</p>
+        </div>
+        <div class="pillars">
+            <div class="card">
+                <div>
+                    <h3>Daily reminders</h3>
+                    <p>Turn the nudge on or off, and pick whether it lands in the morning, afternoon or evening.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h3>Anonymous insights</h3>
+                    <p>Choose whether to share anonymous wellness insights with the practice. Off is a valid answer.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h3>Activity progress</h3>
+                    <p>Hide the points, rings and streaks entirely if the counting is not helping you.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h3>Streak history</h3>
+                    <p>Your current and longest streak, and which days of this week you showed up.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">For the practice</p>
+            <h2 class="section-title">The admin side</h2>
+            <p class="section-note">Anat and the practice team get their own tools inside the same app, for putting the audio out and keeping an eye on how clients are doing.</p>
+        </div>
+        <div class="pillars">
+            <div class="card">
+                <div>
+                    <h3>Upload and schedule</h3>
+                    <p>Add a new audio file, tag it with a category, and schedule when it should broadcast.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h3>Accounts</h3>
+                    <p>Activate and deactivate client accounts as people join and leave the practice.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h3>Engagement</h3>
+                    <p>Streaks and completed sessions per client, so a therapist can see who has gone quiet.</p>
+                </div>
+            </div>
+        </div>
+        <div class="callout">
+            <h3>Privacy boundary</h3>
+            <p>Journal entries are not accessible to admins. That privacy boundary is intentional and part of the trust story.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section-sunken" id="privacy">
+    <div class="shell">
+        <div class="section-head section-head-center">
+            <p class="eyebrow">Privacy</p>
+            <h2 class="section-title">What Sgula keeps, and who can see it</h2>
+            <p class="section-note">Sgula is used inside a therapeutic relationship, so the boundaries have to be clear before you write anything down. This is the whole picture.</p>
+        </div>
+        <div class="prose">
+            <div class="callout">
+                <h3>The short version</h3>
+                <p>Your journal entries are not accessible to admins. Your therapist can see that you have been active, not what you wrote.</p>
+            </div>
+
+            <h3>What the app stores</h3>
+            <p>Sgula only holds what it needs to give you your history back and to keep your plant growing.</p>
+            <ul>
+                <li>Your account details, so you can log in on a new phone and still have your history.</li>
+                <li>Mood check-ins, the rating and any note you attached to it.</li>
+                <li>Journal entries, kept for you to read back.</li>
+                <li>Activity records: sessions played, quizzes taken, points earned, current and longest streak.</li>
+                <li>Your settings, including whether reminders are on and whether progress is shown at all.</li>
+            </ul>
+
+            <h3>What your therapist can see</h3>
+            <p>The practice has an engagement view inside the app. It tracks streaks and completed sessions per client without exposing private journal content, so a therapist can tell that someone has gone quiet without reading their private writing.</p>
+            <ul>
+                <li>Visible: your name, your current streak, how many sessions you have completed.</li>
+                <li>Not visible: journal entries, mood notes, or anything you typed.</li>
+            </ul>
+            <p>That split is enforced by the app itself. It is not a setting anyone at the practice can turn off.</p>
+
+            <h3>Anonymous insights</h3>
+            <p>Settings has a toggle for sharing anonymous wellness insights. When it is on, aggregate patterns like how often check-ins happen help the practice understand what is working across everyone using the app. Nothing in that view identifies you. When it is off, nothing is shared at all, and the rest of the app works exactly the same.</p>
+
+            <h3>Using Sgula as a guest</h3>
+            <p>You can open the app without an account and go straight to the audio. Guests get audio previews, white noise and the day's broadcasts. Journalling, mood logging and the succulent are locked until you sign up, and guest progress is not saved anywhere.</p>
+
+            <h3>Turning the counting off</h3>
+            <p>Points, rings and streaks help some people and weigh on others. The show activity progress toggle in settings hides all of it. Your entries and your history stay exactly where they are, they just stop being scored back at you.</p>
+
+            <h3>Notifications</h3>
+            <p>Daily reminders are off unless you turn them on, and you choose whether they arrive in the morning, afternoon or evening. Sgula also sends a notification when a new daily broadcast is available, when a new affirmation is displayed, and when your succulent reaches a milestone.</p>
+
+            <h3>Asking us something</h3>
+            <p>If you want to know what is held against your account, or you want it removed, speak to the practice or <a href="mailto:@site.ContactEmail">email us</a> and we will sort it out.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="shell">
+        <div class="cta">
+            <p class="eyebrow">Sgula</p>
+            <h2>Start with tomorrow morning</h2>
+            <p class="cta-lead">Download Sgula, create your account, and the first broadcast will be waiting for you.</p>
+            <div class="hero-actions">
+                @await Html.PartialAsync("_PlayBadge")
+            </div>
+            <p class="hero-note">Built for modern Android devices. A prototype release built for INSY7315.</p>
+        </div>
+    </div>
+</section>

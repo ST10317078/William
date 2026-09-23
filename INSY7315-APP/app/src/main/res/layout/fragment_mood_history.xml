@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingTop="@dimen/sgula_space_5"
+    android:paddingBottom="@dimen/sgula_space_6"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/sgula_space_5"
+        android:paddingEnd="@dimen/sgula_space_5"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Widget.Sgula.Text.Eyebrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Past check-ins" />
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mood history" />
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your check-ins, newest first. Only you can see these." />
+
+        <LinearLayout
+            android:id="@+id/mood_month_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mood_month_previous"
+                style="@style/Widget.Sgula.Button.Ghost"
+                android:layout_width="@dimen/sgula_min_touch_target"
+                android:layout_height="@dimen/sgula_min_touch_target"
+                android:contentDescription="Previous month"
+                android:padding="0dp"
+                android:rotation="90"
+                app:icon="@drawable/ic_chevron_down"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="20dp" />
+
+            <TextView
+                android:id="@+id/mood_month_label"
+                style="@style/Widget.Sgula.Text.H3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                tools:text="September 2026" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mood_month_next"
+                style="@style/Widget.Sgula.Button.Ghost"
+                android:layout_width="@dimen/sgula_min_touch_target"
+                android:layout_height="@dimen/sgula_min_touch_target"
+                android:contentDescription="Next month"
+                android:padding="0dp"
+                android:rotation="-90"
+                app:icon="@drawable/ic_chevron_down"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="20dp" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mood_summary_card"
+            style="@style/Widget.Sgula.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_3"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.example.insy7315_wil_.ui.widget.SgulaProgressRingView
+                    android:id="@+id/mood_average_ring"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:sgulaRingDiameter="104dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/sgula_space_5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Average mood" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/sgula_space_1"
+                        android:gravity="center_vertical">
+
+                        <View
+                            android:id="@+id/mood_average_dot"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:background="@drawable/sgula_dot_14" />
+
+                        <TextView
+                            android:id="@+id/mood_average_label"
+                            style="@style/Widget.Sgula.Text.H3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/sgula_space_2"
+                            tools:text="Good" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/mood_check_ins"
+                        style="@style/Widget.Sgula.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="14 check-ins" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/mood_history_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/sgula_primary"
+            app:trackColor="@color/sgula_primary_soft" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mood_state_card"
+            style="@style/Widget.Sgula.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mood_state_title"
+                    style="@style/Widget.Sgula.Text.CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="No check-ins yet" />
+
+                <TextView
+                    android:id="@+id/mood_state_body"
+                    style="@style/Widget.Sgula.Text.CardBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_2"
+                    tools:text="Your first check-in will show up here once you save it." />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mood_state_action"
+                    style="@style/Widget.Sgula.Button.Secondary.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sgula_space_3"
+                    android:visibility="gone"
+                    tools:text="Try again"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/mood_entries_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_1"
+            android:orientation="vertical" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mood_back_to_log"
+            style="@style/Widget.Sgula.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4"
+            android:text="Back to log" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

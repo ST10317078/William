@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingTop="@dimen/sgula_space_5"
+    android:paddingBottom="@dimen/sgula_space_6"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin engagement view" />
+
+        <TextView
+            style="@style/Widget.Sgula.Text.PageSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Track streaks and completed sessions per client without exposing private journal content." />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Sgula.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy boundary" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.CardBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Journal entries are not accessible to admins. That privacy boundary is intentional and part of the trust story." />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Sgula.Card.Table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/Widget.Sgula.AdminTable.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.TableHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:text="Client" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.TableHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="Streak" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.TableHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="Sessions" />
+                </LinearLayout>
+
+                <View style="@style/Widget.Sgula.AdminTable.Divider" />
+
+                <LinearLayout
+                    style="@style/Widget.Sgula.AdminTable.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:text="Jane Doe" />
+
+                    <com.example.insy7315_wil_.ui.widget.SgulaStreakChipView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        app:sgulaDays="12" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="18" />
+                </LinearLayout>
+
+                <View style="@style/Widget.Sgula.AdminTable.Divider" />
+
+                <LinearLayout
+                    style="@style/Widget.Sgula.AdminTable.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:text="Sam Rivera" />
+
+                    <com.example.insy7315_wil_.ui.widget.SgulaStreakChipView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        app:sgulaDays="4" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="9" />
+                </LinearLayout>
+
+                <View style="@style/Widget.Sgula.AdminTable.Divider" />
+
+                <LinearLayout
+                    style="@style/Widget.Sgula.AdminTable.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:text="Aisha Mokoena" />
+
+                    <com.example.insy7315_wil_.ui.widget.SgulaStreakChipView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        app:sgulaDays="21" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="26" />
+                </LinearLayout>
+
+                <View style="@style/Widget.Sgula.AdminTable.Divider" />
+
+                <LinearLayout
+                    style="@style/Widget.Sgula.AdminTable.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:text="Liam Naidoo" />
+
+                    <com.example.insy7315_wil_.ui.widget.SgulaStreakChipView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        app:sgulaDays="0" />
+
+                    <TextView
+                        style="@style/Widget.Sgula.Text.Body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="3" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

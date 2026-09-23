@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size
+                android:width="22dp"
+                android:height="22dp" />
+            <solid android:color="@color/sgula_plum_500" />
+            <stroke
+                android:width="@dimen/sgula_field_border_selected"
+                android:color="@color/sgula_plum_500" />
+        </shape>
+    </item>
+    <item
+        android:left="6dp"
+        android:top="6dp"
+        android:right="6dp"
+        android:bottom="6dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/sgula_plum_50" />
+        </shape>
+    </item>
+</layer-list>

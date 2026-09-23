@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="140dp"
+    android:viewportWidth="120"
+    android:viewportHeight="140">
+
+    <group android:rotation="-40" android:pivotX="46" android:pivotY="72">
+        <path
+            android:fillColor="@color/sgula_plant_600"
+            android:pathData="M38,72 A8,18 0 1,0 54,72 A8,18 0 1,0 38,72 Z" />
+    </group>
+
+    <group android:rotation="40" android:pivotX="74" android:pivotY="72">
+        <path
+            android:fillColor="@color/sgula_plant_600"
+            android:pathData="M66,72 A8,18 0 1,0 82,72 A8,18 0 1,0 66,72 Z" />
+    </group>
+
+    <group android:rotation="-18" android:pivotX="51" android:pivotY="62">
+        <path
+            android:fillColor="@color/sgula_plant_500"
+            android:pathData="M43,62 A8,20 0 1,0 59,62 A8,20 0 1,0 43,62 Z" />
+    </group>
+
+    <group android:rotation="18" android:pivotX="69" android:pivotY="62">
+        <path
+            android:fillColor="@color/sgula_plant_300"
+            android:pathData="M61,62 A8,20 0 1,0 77,62 A8,20 0 1,0 61,62 Z" />
+    </group>
+
+    <path
+        android:fillColor="@color/sgula_plant_100"
+        android:pathData="M53,54 A7,17 0 1,0 67,54 A7,17 0 1,0 53,54 Z" />
+
+    <path
+        android:fillColor="@color/sgula_ink_700"
+        android:pathData="M37,89 A23,6 0 1,0 83,89 A23,6 0 1,0 37,89 Z" />
+
+    <path
+        android:fillColor="@color/sgula_accent_500"
+        android:pathData="M39,88 L81,88 A6,6 0 0,1 87,94 A6,6 0 0,1 81,100 L39,100 A6,6 0 0,1 33,94 A6,6 0 0,1 39,88 Z" />
+
+    <path
+        android:fillColor="@color/sgula_accent_600"
+        android:pathData="M38,100 L82,100 L77,128 Q75.5,134 69,134 L51,134 Q44.5,134 43,128 Z" />
+</vector>

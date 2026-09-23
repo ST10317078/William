@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="sgula_nav_host" type="id" />
+    <item name="sgula_tab_bar" type="id" />
+    <item name="sgula_top_nav" type="id" />
+</resources>

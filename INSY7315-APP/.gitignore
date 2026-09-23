@@ -1,0 +1,35 @@
+# Build Outputs & Generated Files
+*.apk
+*.ap_
+*.aab
+*.aar
+*.dex
+*.class
+bin/
+gen/
+out/
+build/
+/*/build/
+.kotlin/
+
+# Gradle & Local Config
+.gradle/
+.gradle-work/
+local.properties
+
+# IDE & OS Files
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Android Studio Specific
+captures/
+.externalNativeBuild/
+.cxx/
+*.jks
+*.keystore
+google-services.json
+
+# npm cache
+.npm-cache/

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Sgula" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/sgula_text</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.H1">
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textSize">@dimen/sgula_font_xxl</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.H2">
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textSize">@dimen/sgula_font_xl</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.H3">
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textSize">@dimen/sgula_font_lg</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Body">
+        <item name="android:textSize">@dimen/sgula_font_base</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.BodySecondary" parent="TextAppearance.Sgula.Body">
+        <item name="android:textColor">@color/sgula_text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.BodySmall">
+        <item name="android:textSize">@dimen/sgula_font_sm</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Caption">
+        <item name="android:textSize">@dimen/sgula_font_xs</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textColor">@color/sgula_text_tertiary</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Label">
+        <item name="android:textSize">@dimen/sgula_font_sm</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Button">
+        <item name="android:textSize">@dimen/sgula_font_base</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.ButtonSmall" parent="TextAppearance.Sgula.Button">
+        <item name="android:textSize">@dimen/sgula_font_sm</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Eyebrow">
+        <item name="android:textSize">@dimen/sgula_font_xs</item>
+        <item name="android:textFontWeight">700</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">@color/sgula_plum_600</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Affirmation">
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textSize">@dimen/sgula_font_xl</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textColor">@color/sgula_plum_900</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.RingValue">
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textSize">@dimen/sgula_font_xxl</item>
+        <item name="android:textFontWeight">700</item>
+        <item name="android:textColor">@color/sgula_plum_800</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Link" parent="TextAppearance.Sgula.Body">
+        <item name="android:textColor">@color/sgula_plum_700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.TableHeader" parent="TextAppearance.Sgula.Caption">
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.FieldHint" parent="TextAppearance.Sgula.BodySmall">
+        <item name="android:textColor">@color/sgula_text_tertiary</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.FieldError" parent="TextAppearance.Sgula.BodySmall">
+        <item name="android:textColor">@color/sgula_danger_hover</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.PointsToast" parent="TextAppearance.Sgula.BodySmall">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.StreakDays" parent="TextAppearance.Sgula.H3">
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textColor">@color/sgula_accent_700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.PlantStageName" parent="TextAppearance.Sgula.H2">
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textColor">@color/sgula_plum_800</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.StreakLabel" parent="TextAppearance.Sgula.BodySmall">
+        <item name="android:textColor">@color/sgula_accent_700</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.BadgeActive" parent="TextAppearance.Sgula.Caption">
+        <item name="android:textColor">@color/sgula_plum_700</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.BadgeDeactivated" parent="TextAppearance.Sgula.Caption">
+        <item name="android:textColor">@color/sgula_ink_500</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.MoodLabel" parent="TextAppearance.Sgula.Caption">
+        <item name="android:textColor">@color/sgula_mood_label</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.QuizOption" parent="TextAppearance.Sgula.Body">
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.PlantLabel" parent="TextAppearance.Sgula.Caption">
+        <item name="android:textColor">@color/sgula_plant_label</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Tab" parent="TextAppearance.Sgula.BodySmall">
+        <item name="android:textColor">@color/sgula_tab_label</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.TabBarLabel" parent="TextAppearance.Sgula.Caption">
+        <item name="android:textColor">@color/sgula_tab_bar_label</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.TopNavLabel" parent="TextAppearance.Sgula.Body">
+        <item name="android:textColor">@color/sgula_top_nav_label</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.Sgula.Brand" parent="TextAppearance.Sgula.H3">
+        <item name="android:textColor">@color/sgula_plum_800</item>
+    </style>
+
+
+    <style name="Widget.Sgula.Text" parent="Widget.AppCompat.TextView">
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Body</item>
+        <item name="android:lineHeight">24sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.H1">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.H1</item>
+        <item name="android:lineHeight">30sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.H2">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.H2</item>
+        <item name="android:lineHeight">25sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.H3">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.H3</item>
+        <item name="android:lineHeight">23sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.Body">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Body</item>
+        <item name="android:lineHeight">24sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.BodySecondary">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.BodySecondary</item>
+        <item name="android:lineHeight">24sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.BodySmall">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.BodySmall</item>
+        <item name="android:lineHeight">21sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.Caption">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Caption</item>
+        <item name="android:lineHeight">19sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.Label">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Label</item>
+        <item name="android:lineHeight">21sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.Eyebrow">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Eyebrow</item>
+        <item name="android:lineHeight">19sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.Affirmation">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Affirmation</item>
+        <item name="android:lineHeight">33sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.RingValue">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.RingValue</item>
+        <item name="android:lineHeight">30sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.TableHeader">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.TableHeader</item>
+        <item name="android:lineHeight">19sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.StreakDays">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.StreakDays</item>
+        <item name="android:lineHeight">23sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.StreakLabel">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.StreakLabel</item>
+        <item name="android:lineHeight">21sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.MoodLabel">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.MoodLabel</item>
+        <item name="android:lineHeight">19sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.QuizOption">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.QuizOption</item>
+        <item name="android:lineHeight">24sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.PlantLabel">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.PlantLabel</item>
+        <item name="android:lineHeight">19sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.Tab">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Tab</item>
+        <item name="android:lineHeight">21sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.TabBarLabel">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.TabBarLabel</item>
+        <item name="android:lineHeight">19sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.TopNavLabel">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.TopNavLabel</item>
+        <item name="android:lineHeight">24sp</item>
+    </style>
+
+    <style name="Widget.Sgula.Text.Brand">
+        <item name="android:textAppearance">@style/TextAppearance.Sgula.Brand</item>
+        <item name="android:lineHeight">23sp</item>
+    </style>
+</resources>

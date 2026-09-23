@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/plant_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/sgula_plant_item_bg"
+    android:paddingLeft="@dimen/sgula_space_1"
+    android:paddingRight="@dimen/sgula_space_1"
+    android:paddingTop="@dimen/sgula_space_3"
+    android:paddingBottom="@dimen/sgula_space_3">
+
+    <ImageView
+        android:id="@+id/plant_icon"
+        android:layout_width="@dimen/sgula_plant_stage_icon_sm_w"
+        android:layout_height="@dimen/sgula_plant_stage_icon_sm_h"
+        android:importantForAccessibility="no"
+        android:duplicateParentState="true"
+        tools:src="@drawable/ic_plant_sprout" />
+
+    <TextView
+        android:id="@+id/plant_label"
+        style="@style/Widget.Sgula.Text.PlantLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_2"
+        android:gravity="center_horizontal"
+        android:duplicateParentState="true"
+        tools:text="Growing" />
+</LinearLayout>

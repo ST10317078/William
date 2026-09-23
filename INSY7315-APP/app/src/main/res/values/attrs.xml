@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AffirmationCardView">
+        <attr name="sgulaEyebrow" format="string" />
+        <attr name="sgulaAffirmation" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaTextFieldView">
+        <attr name="sgulaLabel" format="string" />
+        <attr name="sgulaPlaceholder" format="string" />
+        <attr name="sgulaHelperText" format="string" />
+        <attr name="sgulaError" format="string" />
+        <attr name="sgulaOptional" format="boolean" />
+        <attr name="sgulaPassword" format="boolean" />
+        <attr name="sgulaSingleLine" format="boolean" />
+        <attr name="sgulaFieldMinHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaProgressRingView">
+        <attr name="sgulaProgress" format="float" />
+        <attr name="sgulaCaption" format="string" />
+        <attr name="sgulaValueLabel" format="string" />
+        <attr name="sgulaRingDiameter" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaTrackArtView">
+        <attr name="sgulaArtSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaTrackItemView">
+        <attr name="sgulaTitle" format="string" />
+        <attr name="sgulaDuration" format="string" />
+        <attr name="sgulaFavourite" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaPlayerBarView">
+        <attr name="sgulaTitle" />
+        <attr name="sgulaSubtitle" format="string" />
+        <attr name="sgulaElapsed" format="string" />
+        <attr name="sgulaTotal" format="string" />
+        <attr name="sgulaProgress" />
+        <attr name="sgulaPlaying" format="boolean" />
+        <attr name="sgulaLooping" format="boolean" />
+        <attr name="sgulaFavourite" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaPlantStagesView">
+        <attr name="sgulaStageIndex" format="integer" />
+        <attr name="sgulaWilted" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaTabsView">
+        <attr name="sgulaEntries" />
+        <attr name="sgulaSelectedIndex" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaMoodScaleView">
+        <attr name="sgulaEntries" />
+        <attr name="sgulaSelectedIndex" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaQuizOptionsView">
+        <attr name="sgulaEntries" />
+        <attr name="sgulaSelectedIndex" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaStreakChipView">
+        <attr name="sgulaDays" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="SgulaPasswordStrengthView">
+        <attr name="sgulaStrength" format="enum">
+            <enum name="weak" value="0" />
+            <enum name="medium" value="1" />
+            <enum name="strong" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SgulaDropdownFieldView">
+        <attr name="sgulaLabel" />
+        <attr name="sgulaError" />
+        <attr name="sgulaEntries" format="reference" />
+        <attr name="sgulaSelection" format="string" />
+    </declare-styleable>
+</resources>

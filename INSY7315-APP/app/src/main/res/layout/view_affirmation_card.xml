@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/sgula_space_5"
+        android:paddingRight="@dimen/sgula_space_5"
+        android:paddingTop="@dimen/sgula_space_6"
+        android:paddingBottom="@dimen/sgula_space_6">
+
+        <TextView
+            android:id="@+id/affirmation_eyebrow"
+            style="@style/Widget.Sgula.Text.Eyebrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sgula_accent_700"
+            tools:text="Today's affirmation" />
+
+        <TextView
+            android:id="@+id/affirmation_text"
+            style="@style/Widget.Sgula.Text.Affirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_2"
+            android:gravity="center_horizontal"
+            tools:text="You are allowed to take up space." />
+    </LinearLayout>
+</merge>

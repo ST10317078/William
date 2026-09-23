@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/streak_days"
+        style="@style/Widget.Sgula.Text.StreakDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="12" />
+
+    <TextView
+        android:id="@+id/streak_label"
+        style="@style/Widget.Sgula.Text.StreakLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sgula_space_3"
+        android:text="@string/sgula_streak_label" />
+</merge>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">INSY7315_WIL_</string>
+
+    <string name="sgula_affirmation_eyebrow">Today\'s affirmation</string>
+    <string name="sgula_field_optional">" (optional)"</string>
+    <string name="sgula_strength_weak">Weak strength</string>
+    <string name="sgula_strength_medium">Medium strength</string>
+    <string name="sgula_strength_strong">Strong strength</string>
+    <string name="sgula_streak_label">day streak</string>
+    <string name="sgula_points_toast">+%1$d points</string>
+    <string name="sgula_ring_caption">Daily goal</string>
+    <string name="sgula_play">Play</string>
+    <string name="sgula_pause">Pause</string>
+    <string name="sgula_loop_track">Loop track</string>
+    <string name="sgula_favourite_add">Add to favourites</string>
+    <string name="sgula_favourite_remove">Remove from favourites</string>
+    <string name="sgula_brand">Sgula</string>
+    <string name="sgula_cancel">Cancel</string>
+    <string name="sgula_delete">Delete</string>
+    <string name="sgula_demo_modal_title">Delete this entry?</string>
+    <string name="sgula_demo_modal_body">This journal entry will be permanently removed. This can\'t be undone.</string>
+</resources>

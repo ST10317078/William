@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:alpha="0.5" android:color="@color/sgula_primary_soft" />
+    <item android:state_pressed="true" android:color="@color/sgula_plum_200" />
+    <item android:color="@color/sgula_primary_soft" />
+</selector>

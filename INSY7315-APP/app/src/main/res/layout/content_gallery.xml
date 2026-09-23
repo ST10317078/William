@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        style="@style/Widget.Sgula.Text.PageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sgula components" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.PageSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        android:text="Build every screen from these. Don't invent new ones." />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buttons" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Primary for the main action. Destructive only for irreversible actions." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Sgula.Button.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/sgula_space_3"
+            android:text="Save entry" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Sgula.Button.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not now" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_3"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Sgula.Button.Ghost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/sgula_space_3"
+            android:text="Learn more" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Sgula.Button.Destructive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/sgula_space_3"
+            android:text="Delete" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Sgula.Button.Ghost.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Sgula.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_3"
+        android:enabled="false"
+        android:text="Saving…" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Sgula.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_3"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        android:text="Start today's meditation" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cards" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The affirmation card is reserved for Home." />
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Sgula.Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Widget.Sgula.Text.CardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today's check-in" />
+
+            <TextView
+                style="@style/Widget.Sgula.Text.CardBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You logged a calm mood this morning. Keep noticing what helps." />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.example.insy7315_wil_.ui.widget.AffirmationCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_4"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaAffirmation="&quot;I am allowed to grow at my own pace.&quot;" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Form elements" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Every input needs a visible label." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaTextFieldView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_4"
+        app:sgulaLabel="Full name"
+        app:sgulaPlaceholder="Jane Doe" />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaTextFieldView
+        android:id="@+id/gallery_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_4"
+        app:sgulaLabel="Email"
+        app:sgulaError="Enter a valid email address." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaTextFieldView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_4"
+        app:sgulaLabel="Journal entry"
+        app:sgulaOptional="true"
+        app:sgulaSingleLine="false"
+        app:sgulaFieldMinHeight="@dimen/sgula_text_area_min_height"
+        app:sgulaPlaceholder="What's on your mind today?" />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaDropdownFieldView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_4"
+        app:sgulaLabel="Preferred check-in time"
+        app:sgulaEntries="@array/sgula_checkin_times"
+        app:sgulaSelection="Morning" />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaPasswordStrengthView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaStrength="medium" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mood selector" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Abstract tone dots — no emoji or faces, on purpose." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaMoodScaleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaSelectedIndex="2" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Points toast &amp; streak chip" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shown after a saved action." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/Widget.Sgula.PointsToast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/sgula_space_3"
+            android:text="+5 points" />
+
+        <com.example.insy7315_wil_.ui.widget.SgulaStreakChipView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:sgulaDays="12" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Progress ring" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daily goal on Home. Takes a Float 0f..1f." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaProgressRingView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaProgress="0.7" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plant stages" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Jane is at Sprout. Wilted state shown second." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaPlantStagesView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sgulaStageIndex="1" />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaPlantStagesView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_4"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaStageIndex="1"
+        app:sgulaWilted="true" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Audio" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Track rows and the player bar." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaTrackItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sgulaTitle="Rain on Leaves"
+        app:sgulaDuration="14:00"
+        app:sgulaFavourite="true" />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaTrackItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sgulaTitle="Ocean Drift"
+        app:sgulaDuration="20:00" />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaPlayerBarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_4"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaTitle="Rain on Leaves"
+        app:sgulaSubtitle="Nature sounds"
+        app:sgulaElapsed="4:12"
+        app:sgulaTotal="14:00"
+        app:sgulaProgress="0.3"
+        app:sgulaPlaying="true"
+        app:sgulaLooping="true"
+        app:sgulaFavourite="true" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tabs" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switches between audio categories." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaTabsView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaEntries="@array/sgula_audio_tabs"
+        app:sgulaSelectedIndex="1" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quiz options" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Large tappable answers for the meditation quiz." />
+
+    <com.example.insy7315_wil_.ui.widget.SgulaQuizOptionsView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        app:sgulaEntries="@array/sgula_meditation_quiz"
+        app:sgulaSelectedIndex="1" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modal" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Overlay + centred dialog." />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gallery_show_modal"
+        style="@style/Widget.Sgula.Button.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sgula_space_7"
+        android:text="Show delete confirmation" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin table" />
+
+    <TextView
+        style="@style/Widget.Sgula.Text.SectionNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Therapist views — client lists, broadcasts." />
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Sgula.Card.Table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/Widget.Sgula.AdminTable.Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.TableHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Client" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.TableHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:text="Streak" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.TableHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Status" />
+            </LinearLayout>
+
+            <View style="@style/Widget.Sgula.AdminTable.Divider" />
+
+            <LinearLayout
+                style="@style/Widget.Sgula.AdminTable.Row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.Body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Jane Doe" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.Body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:text="12 days" />
+
+                <TextView
+                    style="@style/Widget.Sgula.StatusBadge.Active"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Active" />
+            </LinearLayout>
+
+            <View style="@style/Widget.Sgula.AdminTable.Divider" />
+
+            <LinearLayout
+                style="@style/Widget.Sgula.AdminTable.Row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.Body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Sam Rivera" />
+
+                <TextView
+                    style="@style/Widget.Sgula.Text.Body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:text="0 days" />
+
+                <TextView
+                    style="@style/Widget.Sgula.StatusBadge.Deactivated"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Deactivated" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

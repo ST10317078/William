@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mood_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:minHeight="@dimen/sgula_min_touch_target"
+    android:background="@drawable/sgula_mood_item_bg"
+    android:paddingLeft="@dimen/sgula_space_1"
+    android:paddingRight="@dimen/sgula_space_1"
+    android:paddingTop="@dimen/sgula_space_4"
+    android:paddingBottom="@dimen/sgula_space_4"
+    android:clickable="true"
+    android:focusable="true">
+
+    <View
+        android:id="@+id/mood_dot"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/sgula_dot_28" />
+
+    <TextView
+        android:id="@+id/mood_label"
+        style="@style/Widget.Sgula.Text.MoodLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sgula_space_2"
+        android:gravity="center_horizontal"
+        tools:text="Calm" />
+</LinearLayout>

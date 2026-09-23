@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Sgula.Text.Body"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/sgula_min_touch_target"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/sgula_field_h_padding"
+    android:paddingRight="@dimen/sgula_field_h_padding"
+    android:paddingTop="@dimen/sgula_space_3"
+    android:paddingBottom="@dimen/sgula_space_3"
+    android:background="?attr/selectableItemBackground"
+    tools:text="Option" />

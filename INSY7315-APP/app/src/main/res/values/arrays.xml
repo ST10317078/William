@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sgula_mood_labels">
+        <item>Rough</item>
+        <item>Low</item>
+        <item>Calm</item>
+        <item>Good</item>
+        <item>Great</item>
+    </string-array>
+
+    <string-array name="sgula_plant_stages">
+        <item>Seed</item>
+        <item>Sprout</item>
+        <item>Growing</item>
+        <item>Blooming</item>
+        <item>Wilted</item>
+    </string-array>
+
+    <string-array name="sgula_checkin_times">
+        <item>Morning</item>
+        <item>Afternoon</item>
+        <item>Evening</item>
+    </string-array>
+
+    <string-array name="sgula_audio_tabs">
+        <item>White Noise</item>
+        <item>Nature</item>
+        <item>Guided</item>
+    </string-array>
+
+    <string-array name="sgula_sleep_timer">
+        <item>Off</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+    </string-array>
+
+    <string-array name="sgula_meditation_quiz">
+        <item>I want to release tension in my body</item>
+        <item>I want to quiet racing thoughts</item>
+        <item>I want help falling asleep</item>
+    </string-array>
+
+    <string-array name="sgula_broadcast_categories">
+        <item>Calm reset</item>
+        <item>Grounding reset</item>
+        <item>Unwind and release</item>
+        <item>Focus and flow</item>
+    </string-array>
+
+    <string-array name="sgula_tabs_sample">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
+
+    <string-array name="sgula_quiz_sample">
+        <item>I felt calm for most of the day.</item>
+        <item>I had a few rough patches.</item>
+        <item>I struggled to settle at all.</item>
+    </string-array>
+
+    <string-array name="sgula_wellness_quiz_answers">
+        <item>Calm</item>
+        <item>Anxious</item>
+        <item>Overwhelmed</item>
+        <item>Motivated</item>
+    </string-array>
+
+    <array name="sgula_mood_tones">
+        <item>@color/sgula_warm_gray_300</item>
+        <item>@color/sgula_plum_300</item>
+        <item>@color/sgula_plum_400</item>
+        <item>@color/sgula_plum_500</item>
+        <item>@color/sgula_accent_500</item>
+    </array>
+    <!-- Daily journal prompts. One is chosen per day; members can ask for another. -->
+    <string-array name="sgula_journal_prompts">
+        <item>What made you feel calm today?</item>
+        <item>What is one small thing you did for yourself today?</item>
+        <item>Which moment today would you like to remember?</item>
+        <item>What felt heavy today, and what helped you carry it?</item>
+        <item>Who or what are you grateful for right now?</item>
+        <item>What did your body need today, and did it get it?</item>
+        <item>What is something you handled better than you expected?</item>
+        <item>What thought kept coming back today? Write it down and look at it kindly.</item>
+        <item>Where did you notice growth in yourself this week?</item>
+        <item>What would you like to let go of before tomorrow?</item>
+        <item>Describe a place where you feel safe. What makes it feel that way?</item>
+        <item>What is one gentle intention for tomorrow?</item>
+        <item>What boundary did you keep, or wish you had kept, today?</item>
+        <item>What would you say to a friend who had the day you had?</item>
+    </string-array>
+</resources>
