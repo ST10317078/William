@@ -107,10 +107,6 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
             R.dimen.sgula_space_3
         )
 
-        if (categoryTracks.isEmpty()) {
-            return
-        }
-
         categoryTracks.forEach { audio ->
 
             val duration = formatDuration(audio.durationSeconds)
@@ -144,7 +140,6 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
             binding.audioTrackList.addView(item, params)
         }
     }
-
     private fun openPlayer(audio: AudioContent) {
 
         findNavController().navigate(

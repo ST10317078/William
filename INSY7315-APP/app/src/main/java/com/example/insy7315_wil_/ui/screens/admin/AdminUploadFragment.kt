@@ -23,6 +23,7 @@ import com.example.insy7315_wil_.ui.widget.SgulaTextFieldView
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import android.provider.OpenableColumns
 
 class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
 
@@ -59,13 +60,44 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
             ActivityResultContracts.GetContent()
         ) { uri ->
 
-            selectedAudioUri = uri
+            if (uri != null) {
+                selectedAudioUri = uri
 
-            view?.findViewById<TextView>(
-                R.id.admin_upload_file_name
-            )?.text =
-                uri?.lastPathSegment ?: "No file selected"
+                view?.findViewById<TextView>(
+                    R.id.admin_upload_file_name
+                )?.text = getFileName(uri)
+            } else {
+                selectedAudioUri = null
+
+                view?.findViewById<TextView>(
+                    R.id.admin_upload_file_name
+                )?.text = "No file selected"
+            }
         }
+
+    private fun getFileName(uri: Uri): String {
+        var fileName = "Selected audio"
+
+        requireContext().contentResolver.query(
+            uri,
+            arrayOf(OpenableColumns.DISPLAY_NAME),
+            null,
+            null,
+            null
+        )?.use { cursor ->
+
+            if (cursor.moveToFirst()) {
+                val nameIndex =
+                    cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+
+                if (nameIndex >= 0) {
+                    fileName = cursor.getString(nameIndex)
+                }
+            }
+        }
+
+        return fileName
+    }
 
     /*
      * SETUP ADMIN UPLOAD SCREEN
