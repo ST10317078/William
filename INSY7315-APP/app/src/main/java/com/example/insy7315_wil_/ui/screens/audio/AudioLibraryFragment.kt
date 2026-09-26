@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+
 import com.example.insy7315_wil_.R
 import com.example.insy7315_wil_.databinding.FragmentAudioLibraryBinding
 import com.example.insy7315_wil_.data.`Data classes`.AudioContent
@@ -27,7 +28,10 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
 
     private var audioContent = emptyList<AudioContent>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentAudioLibraryBinding.bind(view)
@@ -40,68 +44,89 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
     }
 
     private fun loadAudio() {
+
+        binding.audioLoading.visibility = View.VISIBLE
+        binding.audioErrorText.visibility = View.GONE
+
         repository.loadAudioContent()
             .addOnSuccessListener { snapshot ->
 
-                audioContent = snapshot.documents.mapNotNull { document ->
-
-                    try {
-                        AudioContent(
-                            audioId = document.getString("audioId")
-                                ?: document.id,
-
-                            title = document.getString("title")
-                                ?: "",
-
-                            description = document.getString("description")
-                                ?: "",
-
-                            category = document.getString("category")
-                                ?: "",
-
-                            storagePath = document.getString("storagePath")
-                                ?: "",
-
-                            downloadUrl = document.getString("downloadUrl")
-                                ?: "",
-
-                            durationSeconds =
-                                document.getLong("durationSeconds")
-                                    ?.toInt()
-                                    ?: 0,
-
-                            active = document.getBoolean("active")
-                                ?: true
-                        )
-                    } catch (e: Exception) {
-                        null
-                    }
+                audioContent = snapshot.documents.map {
+                    repository.toAudioContent(it)
                 }
 
-                showCategory(binding.audioTabs.selectedIndex)
+                binding.audioLoading.visibility = View.GONE
+
+                if (audioContent.isEmpty()) {
+
+                    binding.audioErrorText.text =
+                        "No audio is currently available."
+
+                    binding.audioErrorText.visibility = View.VISIBLE
+
+                    binding.audioTrackList.removeAllViews()
+
+                } else {
+
+                    binding.audioErrorText.visibility = View.GONE
+
+                    showCategory(
+                        binding.audioTabs.selectedIndex
+                    )
+                }
             }
             .addOnFailureListener { error ->
 
+                binding.audioLoading.visibility = View.GONE
+
+                binding.audioTrackList.removeAllViews()
+
+                binding.audioErrorText.text =
+                    "We couldn't load the audio library: ${error.message}"
+
+                binding.audioErrorText.visibility = View.VISIBLE
+
                 Toast.makeText(
                     requireContext(),
-                    "Could not load audio: ${error.message}",
-                    Toast.LENGTH_LONG
+                    "Could not load audio",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
     }
 
     private fun showCategory(index: Int) {
 
-        if (index !in categories.indices) return
+        if (index !in categories.indices) {
+            return
+        }
 
         val category = categories[index]
 
         binding.audioCategoryLabel.text = category
+
         binding.audioTrackList.removeAllViews()
 
-        val categoryTracks = audioContent.filter {
-            it.category.equals(category, ignoreCase = true)
+        val categoryTracks = audioContent.filter { audio ->
+
+            audio.category
+                .trim()
+                .equals(
+                    category.trim(),
+                    ignoreCase = true
+                )
         }
+
+        if (categoryTracks.isEmpty()) {
+
+            binding.audioErrorText.text =
+                "No audio available in this category."
+
+            binding.audioErrorText.visibility = View.VISIBLE
+
+            return
+        }
+
+        binding.audioErrorText.visibility = View.GONE
 
         val gap = resources.getDimensionPixelSize(
             R.dimen.sgula_space_3
@@ -109,15 +134,17 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
 
         categoryTracks.forEach { audio ->
 
-            val duration = formatDuration(audio.durationSeconds)
-
-            val item = SgulaTrackItemView(requireContext()).apply {
+            val item = SgulaTrackItemView(
+                requireContext()
+            ).apply {
 
                 setTitle(audio.title)
 
                 setDuration(
                     if (audio.durationSeconds > 0) {
-                        duration
+                        formatDuration(
+                            audio.durationSeconds
+                        )
                     } else {
                         "Audio"
                     }
@@ -137,9 +164,13 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
                 params.topMargin = gap
             }
 
-            binding.audioTrackList.addView(item, params)
+            binding.audioTrackList.addView(
+                item,
+                params
+            )
         }
     }
+
     private fun openPlayer(audio: AudioContent) {
 
         findNavController().navigate(
@@ -158,7 +189,9 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
 
                 putString(
                     ARG_TRACK_DURATION,
-                    formatDuration(audio.durationSeconds)
+                    formatDuration(
+                        audio.durationSeconds
+                    )
                 )
 
                 putString(
@@ -179,7 +212,9 @@ class AudioLibraryFragment : Fragment(R.layout.fragment_audio_library) {
         )
     }
 
-    private fun formatDuration(seconds: Int): String {
+    private fun formatDuration(
+        seconds: Int
+    ): String {
 
         if (seconds <= 0) {
             return "0:00"

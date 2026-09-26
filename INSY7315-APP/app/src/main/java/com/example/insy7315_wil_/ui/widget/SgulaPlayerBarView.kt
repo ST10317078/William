@@ -29,6 +29,7 @@ class SgulaPlayerBarView @JvmOverloads constructor(
     var onPlayPause: ((Boolean) -> Unit)? = null
     var onToggleLoop: ((Boolean) -> Unit)? = null
     var onToggleFavourite: ((Boolean) -> Unit)? = null
+    var onSeek: ((Int) -> Unit)? = null
 
     var isPlaying: Boolean = false
         set(value) {
@@ -93,7 +94,24 @@ class SgulaPlayerBarView @JvmOverloads constructor(
             isFavourite = !isFavourite
             onToggleFavourite?.invoke(isFavourite)
         }
+        seekView.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
 
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    if (fromUser) {
+                        onSeek?.invoke(progress)
+                    }
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+            }
+        )
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.SgulaPlayerBarView,

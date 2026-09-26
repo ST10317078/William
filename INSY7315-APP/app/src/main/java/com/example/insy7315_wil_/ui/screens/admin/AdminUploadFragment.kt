@@ -1,9 +1,13 @@
 package com.example.insy7315_wil_.ui.screens.admin
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
+import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 
@@ -23,19 +27,20 @@ import com.example.insy7315_wil_.ui.widget.SgulaTextFieldView
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import android.provider.OpenableColumns
 
 class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
 
     private var selectedAudioUri: Uri? = null
+
+    private val repository by lazy {
+        FirebaseWellnessRepository()
+    }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        val repository = FirebaseWellnessRepository()
 
         repository.checkAdmin(
             onResult = { isAdmin ->
@@ -44,29 +49,33 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                     redirectNonAdminFromAdminContent()
                 } else {
                     setupUploadScreen(view)
+                    loadUploadedAudio(view)
                 }
             },
+
             onError = {
                 redirectNonAdminFromAdminContent()
             }
         )
     }
 
-    /*
-     * AUDIO FILE PICKER
-     */
+    // AUDIO FILE PICKER
+
     private val audioPicker =
         registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri ->
 
             if (uri != null) {
+
                 selectedAudioUri = uri
 
                 view?.findViewById<TextView>(
                     R.id.admin_upload_file_name
                 )?.text = getFileName(uri)
+
             } else {
+
                 selectedAudioUri = null
 
                 view?.findViewById<TextView>(
@@ -76,37 +85,45 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
         }
 
     private fun getFileName(uri: Uri): String {
+
         var fileName = "Selected audio"
 
-        requireContext().contentResolver.query(
-            uri,
-            arrayOf(OpenableColumns.DISPLAY_NAME),
-            null,
-            null,
-            null
-        )?.use { cursor ->
+        requireContext()
+            .contentResolver
+            .query(
+                uri,
+                arrayOf(OpenableColumns.DISPLAY_NAME),
+                null,
+                null,
+                null
+            )
+            ?.use { cursor ->
 
-            if (cursor.moveToFirst()) {
-                val nameIndex =
-                    cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (cursor.moveToFirst()) {
 
-                if (nameIndex >= 0) {
-                    fileName = cursor.getString(nameIndex)
+                    val nameIndex =
+                        cursor.getColumnIndex(
+                            OpenableColumns.DISPLAY_NAME
+                        )
+
+                    if (nameIndex >= 0) {
+                        fileName =
+                            cursor.getString(nameIndex)
+                    }
                 }
             }
-        }
 
         return fileName
     }
 
-    /*
-     * SETUP ADMIN UPLOAD SCREEN
-     */
+    // SETUP ADMIN SCREEN
+
     private fun setupUploadScreen(view: View) {
 
-        /*
-         * CHOOSE AUDIO BUTTON
-         */
+        // --------------------------------------------------------
+        // CHOOSE FILE
+        // --------------------------------------------------------
+
         val chooseButton =
             view.findViewById<MaterialButton>(
                 R.id.admin_upload_choose_file
@@ -116,59 +133,79 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
             audioPicker.launch("audio/*")
         }
 
-        /*
-         * TITLE
-         */
+        // --------------------------------------------------------
+        // TITLE
+        // --------------------------------------------------------
+
         val titleField =
             view.findViewById<SgulaTextFieldView>(
                 R.id.admin_upload_title
             )
 
-        /*
-         * MAIN CATEGORY
-         */
+        // --------------------------------------------------------
+        // MAIN CATEGORY
+        // --------------------------------------------------------
+
         val categoryField =
             view.findViewById<SgulaDropdownFieldView>(
                 R.id.admin_upload_category
             )
 
-        /*
-         * WELLNESS CATEGORY
-         */
+        categoryField.onSelect = {
+            categoryField.error = null
+        }
+
+        // --------------------------------------------------------
+        // WELLNESS CATEGORY
+        // --------------------------------------------------------
+
         val wellnessField =
             view.findViewById<SgulaDropdownFieldView>(
                 R.id.admin_upload_wellness_category
             )
 
-        /*
-         * BROADCAST DATE
-         */
+        wellnessField.onSelect = {
+            wellnessField.error = null
+        }
+
+        // --------------------------------------------------------
+        // BROADCAST DATE
+        // --------------------------------------------------------
+
         val broadcastDateField =
             view.findViewById<TextInputEditText>(
                 R.id.admin_upload_broadcast_date
             )
 
-        /*
-         * LOAD WELLNESS CATEGORIES
-         */
-        val repository = FirebaseWellnessRepository()
+        // --------------------------------------------------------
+        // LOAD WELLNESS CATEGORIES
+        // --------------------------------------------------------
 
-        var categories: List<MeditationCategory> = emptyList()
-
-        wellnessField.onSelect = {
-            wellnessField.error = null
-        }
+        var wellnessCategories: List<MeditationCategory> =
+            emptyList()
 
         repository.loadMeditationCategories()
             .addOnSuccessListener { snapshot ->
 
-                categories = snapshot.documents
-                    .map(repository::toMeditationCategory)
-                    .sortedBy { it.name }
+                wellnessCategories =
+                    snapshot.documents
+                        .map(repository::toMeditationCategory)
+                        .sortedBy { it.name }
 
-                wellnessField.setOptions(
-                    categories.map { it.name }
-                )
+                if (wellnessCategories.isEmpty()) {
+
+                    wellnessField.setOptions(
+                        listOf("No categories available")
+                    )
+
+                } else {
+
+                    wellnessField.setOptions(
+                        wellnessCategories.map {
+                            it.name
+                        }
+                    )
+                }
             }
             .addOnFailureListener {
 
@@ -176,12 +213,14 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                     "Couldn't load the categories"
             }
 
-        /*
-         * CALENDAR DATE PICKER
-         */
+        // --------------------------------------------------------
+        // DATE PICKER
+        // --------------------------------------------------------
+
         broadcastDateField.setOnClickListener {
 
-            val calendar = Calendar.getInstance()
+            val calendar =
+                Calendar.getInstance()
 
             val datePicker =
                 DatePickerDialog(
@@ -193,11 +232,32 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                             Calendar.getInstance().apply {
 
                                 set(
-                                    year,
-                                    month,
-                                    dayOfMonth,
-                                    0,
-                                    0,
+                                    Calendar.YEAR,
+                                    year
+                                )
+
+                                set(
+                                    Calendar.MONTH,
+                                    month
+                                )
+
+                                set(
+                                    Calendar.DAY_OF_MONTH,
+                                    dayOfMonth
+                                )
+
+                                set(
+                                    Calendar.HOUR_OF_DAY,
+                                    0
+                                )
+
+                                set(
+                                    Calendar.MINUTE,
+                                    0
+                                )
+
+                                set(
+                                    Calendar.SECOND,
                                     0
                                 )
 
@@ -228,9 +288,10 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
             datePicker.show()
         }
 
-        /*
-         * UPLOAD BUTTON
-         */
+        // --------------------------------------------------------
+        // UPLOAD BUTTON
+        // --------------------------------------------------------
+
         val uploadButton =
             view.findViewById<MaterialButton>(
                 R.id.admin_upload_button
@@ -238,9 +299,10 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
 
         uploadButton.setOnClickListener {
 
-            /*
-             * AUDIO FILE VALIDATION
-             */
+            // ----------------------------------------------------
+            // AUDIO FILE VALIDATION
+            // ----------------------------------------------------
+
             val uri = selectedAudioUri
 
             if (uri == null) {
@@ -254,10 +316,14 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                 return@setOnClickListener
             }
 
-            /*
-             * TITLE VALIDATION
-             */
-            if (titleField.text.isBlank()) {
+            // ----------------------------------------------------
+            // TITLE VALIDATION
+            // ----------------------------------------------------
+
+            val title =
+                titleField.text.trim()
+
+            if (title.isBlank()) {
 
                 titleField.error =
                     "Title is required"
@@ -265,10 +331,16 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                 return@setOnClickListener
             }
 
-            /*
-             * MAIN CATEGORY VALIDATION
-             */
-            if (categoryField.selection.isNullOrBlank()) {
+            // ----------------------------------------------------
+            // MAIN CATEGORY VALIDATION
+            // ----------------------------------------------------
+
+            val selectedMainCategory =
+                categoryField.selection
+                    ?.trim()
+                    .orEmpty()
+
+            if (selectedMainCategory.isBlank()) {
 
                 categoryField.error =
                     "Category is required"
@@ -276,15 +348,16 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                 return@setOnClickListener
             }
 
-            /*
-             * WELLNESS CATEGORY VALIDATION
-             */
-            val wellnessCategory =
-                categories.firstOrNull {
+            // ----------------------------------------------------
+            // WELLNESS CATEGORY VALIDATION
+            // ----------------------------------------------------
+
+            val selectedWellnessCategory =
+                wellnessCategories.firstOrNull {
                     it.name == wellnessField.selection
                 }
 
-            if (wellnessCategory == null) {
+            if (selectedWellnessCategory == null) {
 
                 wellnessField.error =
                     "Wellness category is required"
@@ -292,13 +365,17 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                 return@setOnClickListener
             }
 
-            /*
-             * BROADCAST DATE VALIDATION
-             */
-            if (broadcastDateField.text
+            // ----------------------------------------------------
+            // DATE VALIDATION
+            // ----------------------------------------------------
+
+            val broadcastDate =
+                broadcastDateField.text
                     ?.toString()
-                    ?.isBlank() != false
-            ) {
+                    ?.trim()
+                    .orEmpty()
+
+            if (broadcastDate.isBlank()) {
 
                 broadcastDateField.error =
                     "Broadcast date is required"
@@ -306,33 +383,36 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                 return@setOnClickListener
             }
 
-            /*
-             * DISABLE BUTTON WHILE UPLOADING
-             */
-            uploadButton.isEnabled = false
+            // ----------------------------------------------------
+            // DISABLE BUTTON
+            // ----------------------------------------------------
 
-            /*
-             * UPLOAD AUDIO
-             */
+            uploadButton.isEnabled = false
+            uploadButton.text = "Uploading..."
+
+            // ----------------------------------------------------
+            // UPLOAD
+            // ----------------------------------------------------
+
             repository.uploadAudioContent(
 
                 uri = uri,
 
-                title = titleField.text.trim(),
+                title = title,
 
-                category = categoryField.selection
-                    .orEmpty(),
+                category = selectedMainCategory,
 
-                categoryId = wellnessCategory.categoryId,
+                categoryId =
+                    selectedWellnessCategory.categoryId,
 
-                broadcastDate =
-                    broadcastDateField.text
-                        ?.toString()
-                        .orEmpty(),
+                broadcastDate = broadcastDate,
 
                 onSuccess = {
 
+                    if (!isAdded) return@uploadAudioContent
+
                     uploadButton.isEnabled = true
+                    uploadButton.text = "Upload audio"
 
                     Toast.makeText(
                         requireContext(),
@@ -340,9 +420,10 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    /*
-                     * CLEAR FORM
-                     */
+                    // --------------------------------------------
+                    // CLEAR FORM
+                    // --------------------------------------------
+
                     titleField.text = ""
 
                     selectedAudioUri = null
@@ -351,13 +432,21 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
 
                     view.findViewById<TextView>(
                         R.id.admin_upload_file_name
-                    ).text =
-                        "No file selected"
+                    ).text = "No file selected"
+
+                    // --------------------------------------------
+                    // REFRESH UPLOADED AUDIO
+                    // --------------------------------------------
+
+                    loadUploadedAudio(view)
                 },
 
                 onError = { error ->
 
+                    if (!isAdded) return@uploadAudioContent
+
                     uploadButton.isEnabled = true
+                    uploadButton.text = "Upload audio"
 
                     Toast.makeText(
                         requireContext(),
@@ -367,5 +456,271 @@ class AdminUploadFragment : Fragment(R.layout.fragment_admin_upload) {
                 }
             )
         }
+    }
+
+    // LOAD UPLOADED AUDIO
+
+    private fun loadUploadedAudio(view: View) {
+
+        val audioList =
+            view.findViewById<LinearLayout>(
+                R.id.admin_audio_list
+            )
+
+        val loading =
+            view.findViewById<View>(
+                R.id.admin_audio_loading
+            )
+
+        val empty =
+            view.findViewById<TextView>(
+                R.id.admin_audio_empty
+            )
+
+        loading.visibility = View.VISIBLE
+        empty.visibility = View.GONE
+
+        audioList.removeAllViews()
+
+        repository.loadAudioContent()
+
+            .addOnSuccessListener { snapshot ->
+
+                if (!isAdded) return@addOnSuccessListener
+
+                loading.visibility = View.GONE
+
+                if (snapshot.isEmpty) {
+
+                    empty.text =
+                        "No audio has been uploaded yet."
+
+                    empty.visibility = View.VISIBLE
+
+                    return@addOnSuccessListener
+                }
+
+                snapshot.documents.forEach { document ->
+
+                    val audio =
+                        repository.toAudioContent(
+                            document
+                        )
+
+                    val row =
+                        LinearLayout(
+                            requireContext()
+                        ).apply {
+
+                            orientation =
+                                LinearLayout.HORIZONTAL
+
+                            gravity =
+                                Gravity.CENTER_VERTICAL
+
+                            setPadding(
+                                0,
+                                12,
+                                0,
+                                12
+                            )
+                        }
+
+   
+                    // INFORMATION CONTAINER
+                    val info =
+                        LinearLayout(
+                            requireContext()
+                        ).apply {
+
+                            orientation =
+                                LinearLayout.VERTICAL
+
+                            layoutParams =
+                                LinearLayout.LayoutParams(
+                                    0,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    1f
+                                )
+                        }
+
+   
+                    // TITLE
+                    val titleText =
+                        TextView(
+                            requireContext()
+                        ).apply {
+
+                            text =
+                                if (audio.title.isBlank()) {
+                                    "Untitled audio"
+                                } else {
+                                    audio.title
+                                }
+
+                            textSize = 16f
+                        }
+
+   
+                    // CATEGORY
+                    val categoryText =
+                        TextView(
+                            requireContext()
+                        ).apply {
+
+                            text =
+                                if (audio.category.isBlank()) {
+                                    "No category"
+                                } else {
+                                    audio.category
+                                }
+
+                            textSize = 13f
+                        }
+
+   
+                    // ADD TEXT
+                    info.addView(titleText)
+                    info.addView(categoryText)
+
+   
+                    // DELETE BUTTON
+                    val deleteButton =
+                        MaterialButton(
+                            requireContext()
+                        ).apply {
+
+                            text = "Delete"
+
+                            setOnClickListener {
+
+                                confirmDeleteAudio(
+                                    view = view,
+                                    audioId =
+                                        audio.audioId,
+                                    title =
+                                        audio.title,
+                                    storagePath =
+                                        audio.storagePath
+                                )
+                            }
+                        }
+
+                    row.addView(info)
+                    row.addView(deleteButton)
+
+                    audioList.addView(row)
+                }
+            }
+
+            .addOnFailureListener { error ->
+
+                if (!isAdded) return@addOnFailureListener
+
+                loading.visibility = View.GONE
+
+                empty.text =
+                    "Could not load uploaded audio."
+
+                empty.visibility = View.VISIBLE
+
+                Toast.makeText(
+                    requireContext(),
+                    "Could not load audio: ${error.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    // DELETE CONFIRMATION
+
+    private fun confirmDeleteAudio(
+        view: View,
+        audioId: String,
+        title: String,
+        storagePath: String
+    ) {
+
+        AlertDialog.Builder(
+            requireContext()
+        )
+            .setTitle("Delete audio?")
+
+            .setMessage(
+                "Are you sure you want to permanently delete \"$title\"?"
+            )
+
+            .setNegativeButton(
+                "Cancel",
+                null
+            )
+
+            .setPositiveButton(
+                "Delete"
+            ) { _, _ ->
+
+                deleteAudio(
+                    view = view,
+                    audioId = audioId,
+                    title = title,
+                    storagePath = storagePath
+                )
+            }
+
+            .show()
+    }
+
+    // DELETE AUDIO
+
+    private fun deleteAudio(
+        view: View,
+        audioId: String,
+        title: String,
+        storagePath: String
+    ) {
+
+        Toast.makeText(
+            requireContext(),
+            "Deleting $title...",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        repository.deleteAudioContent(
+
+            audioId = audioId,
+
+            storagePath = storagePath,
+
+            onSuccess = {
+
+                if (!isAdded) return@deleteAudioContent
+
+                Toast.makeText(
+                    requireContext(),
+                    "Audio deleted",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                loadUploadedAudio(view)
+            },
+
+            onError = { error ->
+
+                if (!isAdded) return@deleteAudioContent
+
+                Toast.makeText(
+                    requireContext(),
+                    "Delete failed: ${error.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        )
+    }
+
+    // CLEANUP
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        selectedAudioUri = null
     }
 }

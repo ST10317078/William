@@ -98,7 +98,7 @@
                     android:layout_marginTop="@dimen/sgula_space_4"
                     app:sgulaLabel="Library tab"
                     app:sgulaEntries="@array/sgula_audio_tabs"
-                    app:sgulaSelection="Guided" />
+                    app:sgulaSelection="Guided meditation" />
 
                 <com.example.insy7315_wil_.ui.widget.SgulaDropdownFieldView
                     android:id="@+id/admin_upload_wellness_category"
@@ -135,5 +135,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/sgula_space_5"
             android:text="Upload audio" />
+
+        <TextView
+            style="@style/Widget.Sgula.Text.SectionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_6"
+            android:text="Uploaded audio" />
+
+        <ProgressBar
+            android:id="@+id/admin_audio_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/sgula_space_3"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/admin_audio_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_3"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/admin_audio_empty"
+            style="@style/Widget.Sgula.Text.BodySmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sgula_space_2"
+            android:text="No audio has been uploaded yet."
+            android:visibility="gone" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

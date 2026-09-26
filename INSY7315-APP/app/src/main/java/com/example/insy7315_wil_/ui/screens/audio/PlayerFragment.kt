@@ -1,11 +1,11 @@
 package com.example.insy7315_wil_.ui.screens.audio
 
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.insy7315_wil_.R
@@ -31,6 +31,7 @@ internal const val ARG_AUDIO_URL = "audio_url"
 internal const val ARG_AUDIO_STORAGE_PATH = "audio_storage_path"
 
 private const val COMPLETION_POINTS = 20
+private const val PROGRESS_UPDATE_MS = 250L
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
 
@@ -39,50 +40,36 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private val repository = FirebaseWellnessRepository()
 
-    private val handler = Handler(Looper.getMainLooper())
-
     private var mediaPlayer: MediaPlayer? = null
 
-    private var audioId = ""
+    private val handler = Handler(Looper.getMainLooper())
 
+    private var audioId = ""
+    private var audioStoragePath = ""
     private var audioUrl = ""
 
-    private var storagePath = ""
+    // Unique ID for this playback session
+    private var sessionId = ""
 
+    private var totalSeconds = 0
     private var sessionCompleted = false
 
-    private val progressRunnable = object : Runnable {
+    private var sleepTimerRunnable: Runnable? = null
 
+    private val progressUpdater = object : Runnable {
         override fun run() {
 
             val player = mediaPlayer ?: return
 
-            if (!player.isPlaying) {
-                return
-            }
+            if (player.isPlaying) {
 
-            val duration = player.duration
+                updateProgress(player)
 
-            val position = player.currentPosition
-
-            if (duration > 0) {
-
-                binding.playerBar.playbackProgress =
-                    position.toFloat() / duration.toFloat()
-
-                binding.playerBar.setElapsed(
-                    formatTime(position / 1000)
-                )
-
-                binding.playerBar.setTotal(
-                    formatTime(duration / 1000)
+                handler.postDelayed(
+                    this,
+                    PROGRESS_UPDATE_MS
                 )
             }
-
-            handler.postDelayed(
-                this,
-                500L
-            )
         }
     }
 
@@ -94,16 +81,16 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         _binding = FragmentPlayerBinding.bind(view)
 
+        // Create a unique ID for this audio session
+        sessionId = UUID.randomUUID().toString()
+
         val args = arguments
 
-        audioId =
-            args?.getString(ARG_AUDIO_ID).orEmpty()
-
-        audioUrl =
-            args?.getString(ARG_AUDIO_URL).orEmpty()
-
-        storagePath =
-            args?.getString(ARG_AUDIO_STORAGE_PATH).orEmpty()
+        /*
+         * ------------------------------------------------------------
+         * Quiz recommendation information
+         * ------------------------------------------------------------
+         */
 
         val category =
             args?.getString(ARG_RECOMMENDED_CATEGORY).orEmpty()
@@ -119,16 +106,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                     broadcast.isNotBlank() ||
                     answer.isNotBlank()
 
-        binding.playerRecommendationCard.isVisible =
-            fromQuiz
+        binding.playerRecommendationCard.isVisible = fromQuiz
 
         if (fromQuiz) {
 
             val points =
-                args?.getInt(
-                    ARG_POINTS_EARNED,
-                    15
-                ) ?: 15
+                args?.getInt(ARG_POINTS_EARNED, 15) ?: 15
 
             binding.playerRecommendationSubtitle.text =
                 "Your matched meditation is loaded. You earned +$points points."
@@ -155,6 +138,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                 }
         }
 
+        /*
+         * ------------------------------------------------------------
+         * Track information
+         * ------------------------------------------------------------
+         */
+
         val quizTitle =
             args?.getString(ARG_PLAYER_TITLE).orEmpty()
 
@@ -170,21 +159,24 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         val duration =
             args?.getString(ARG_TRACK_DURATION).orEmpty()
 
+        audioId =
+            args?.getString(ARG_AUDIO_ID).orEmpty()
+
+        audioUrl =
+            args?.getString(ARG_AUDIO_URL).orEmpty()
+
+        audioStoragePath =
+            args?.getString(ARG_AUDIO_STORAGE_PATH).orEmpty()
+
         val title =
-            listOf(
-                trackTitle,
-                quizTitle
-            ).firstOrNull {
-                it.isNotBlank()
-            } ?: "Calm reset"
+            listOf(trackTitle, quizTitle)
+                .firstOrNull { it.isNotBlank() }
+                ?: "Calm reset"
 
         val subtitle =
-            listOf(
-                trackSubtitle,
-                quizSubtitle
-            ).firstOrNull {
-                it.isNotBlank()
-            } ?: "Guided meditation"
+            listOf(trackSubtitle, quizSubtitle)
+                .firstOrNull { it.isNotBlank() }
+                ?: "Guided meditation"
 
         binding.playerTrackTitle.text = title
         binding.playerTrackSubtitle.text = subtitle
@@ -192,16 +184,29 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         binding.playerBar.setTitle(title)
         binding.playerBar.setSubtitle(subtitle)
 
-        binding.playerBar.setTotal(
-            if (duration.isNotBlank()) {
-                duration
-            } else {
-                "0:00"
-            }
-        )
+        /*
+         * We initially use the duration passed from the library.
+         * Once MediaPlayer prepares, the actual duration replaces it.
+         */
+
+        totalSeconds =
+            parseDuration(duration) ?: 0
+
+        if (totalSeconds > 0) {
+
+            binding.playerBar.setTotal(
+                formatTime(totalSeconds)
+            )
+        }
 
         binding.playerBar.setElapsed("0:00")
         binding.playerBar.playbackProgress = 0f
+
+        /*
+         * ------------------------------------------------------------
+         * Player controls
+         * ------------------------------------------------------------
+         */
 
         binding.playerBar.onPlayPause = { playing ->
 
@@ -216,154 +221,363 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
             mediaPlayer?.isLooping = looping
         }
+
+        binding.playerBar.onToggleFavourite = { favourite ->
+
+            // Favourite persistence can be connected to Firestore later.
+            // The player currently maintains the UI state.
+        }
+
+        binding.playerBar.onSeek = { progress ->
+
+            val player = mediaPlayer
+
+            if (player != null && player.duration > 0) {
+
+                val targetPosition =
+                    ((progress / 100f) * player.duration)
+                        .toInt()
+
+                player.seekTo(targetPosition)
+
+                updateProgress(player)
+            }
+        }
+
+        /*
+         * ------------------------------------------------------------
+         * Sleep timer
+         * ------------------------------------------------------------
+         */
+
+        binding.playerSleepTimer.onSelect = { choice ->
+
+            setupSleepTimer(choice)
+
+            binding.playerSleepTimerNote.text =
+                if (choice == "Off") {
+                    "Playback stops on its own when the timer runs out."
+                } else {
+                    "Playback will stop after $choice."
+                }
+        }
+
+        /*
+         * ------------------------------------------------------------
+         * Start loading the audio
+         * ------------------------------------------------------------
+         */
+
+        loadAudio()
     }
 
-    private fun playAudio() {
+    /*
+     * ------------------------------------------------------------
+     * LOAD AUDIO
+     * ------------------------------------------------------------
+     */
 
-        if (mediaPlayer != null) {
+    private fun loadAudio() {
 
-            mediaPlayer?.start()
+        showLoading(true)
+        showError(false)
 
-            binding.playerBar.isPlaying = true
-
-            startProgressUpdates()
-
-            return
-        }
+        /*
+         * Prefer the download URL already stored in AudioContent.
+         */
 
         if (audioUrl.isNotBlank()) {
-            prepareAndPlay(audioUrl)
+
+            preparePlayer(audioUrl)
+
             return
         }
 
-        if (storagePath.isNotBlank()) {
+        /*
+         * Older Firestore documents may only have storagePath.
+         */
+
+        if (audioStoragePath.isNotBlank()) {
 
             repository.getAudioDownloadUrl(
-                storagePath = storagePath,
+                storagePath = audioStoragePath,
 
                 onSuccess = { url ->
-                    audioUrl = url
-                    prepareAndPlay(url)
+
+                    if (isAdded) {
+
+                        audioUrl = url
+
+                        preparePlayer(url)
+                    }
                 },
 
                 onError = { error ->
-                    binding.playerBar.isPlaying = false
 
-                    Toast.makeText(
-                        requireContext(),
-                        "Could not load audio: ${error.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    if (isAdded) {
+
+                        showLoading(false)
+
+                        showError(
+                            true,
+                            "We couldn't load this audio: ${
+                                error.message ?: "Unknown error"
+                            }"
+                        )
+                    }
                 }
             )
 
             return
         }
 
-        Toast.makeText(
-            requireContext(),
-            "No audio file was found.",
-            Toast.LENGTH_LONG
-        ).show()
+        showLoading(false)
 
-        binding.playerBar.isPlaying = false
+        showError(
+            true,
+            "This audio does not have a playable file."
+        )
     }
 
-    private fun prepareAndPlay(url: String) {
+    /*
+     * ------------------------------------------------------------
+     * PREPARE MEDIA PLAYER
+     * ------------------------------------------------------------
+     */
+
+    private fun preparePlayer(url: String) {
+
+        releasePlayer()
+
+        showLoading(true)
+        showError(false)
 
         try {
 
-            mediaPlayer?.release()
+            val player = MediaPlayer()
 
-            mediaPlayer = MediaPlayer().apply {
+            mediaPlayer = player
 
-                setDataSource(url)
+            player.setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(
+                        AudioAttributes.CONTENT_TYPE_MUSIC
+                    )
+                    .setUsage(
+                        AudioAttributes.USAGE_MEDIA
+                    )
+                    .build()
+            )
 
-                setOnPreparedListener { player ->
+            player.setDataSource(url)
+
+            player.setOnPreparedListener {
+
+                if (isAdded) {
+
+                    totalSeconds =
+                        (it.duration / 1000)
+                            .coerceAtLeast(0)
 
                     binding.playerBar.setTotal(
-                        formatTime(
-                            player.duration / 1000
-                        )
+                        formatTime(totalSeconds)
                     )
 
-                    binding.playerBar.isPlaying = true
+                    binding.playerBar.setElapsed("0:00")
 
-                    player.start()
+                    binding.playerBar.playbackProgress = 0f
 
-                    startProgressUpdates()
-                }
+                    showLoading(false)
 
-                setOnCompletionListener {
+                    showError(false)
+
+                    it.isLooping =
+                        binding.playerBar.isLooping
 
                     binding.playerBar.isPlaying = false
+                }
+            }
 
-                    handler.removeCallbacks(
-                        progressRunnable
-                    )
+            player.setOnCompletionListener {
+
+                if (!binding.playerBar.isLooping) {
 
                     finishTrack()
                 }
+            }
 
-                setOnErrorListener { _, _, _ ->
+            player.setOnErrorListener { _, _, _ ->
+
+                if (isAdded) {
 
                     binding.playerBar.isPlaying = false
 
-                    handler.removeCallbacks(
-                        progressRunnable
+                    showLoading(false)
+
+                    showError(
+                        true,
+                        "Unable to play this audio. Please check your connection and try again."
                     )
-
-                    Toast.makeText(
-                        requireContext(),
-                        "Unable to play this audio file.",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    true
                 }
 
-                prepareAsync()
+                true
+            }
+
+            player.prepareAsync()
+
+        } catch (error: Exception) {
+
+            showLoading(false)
+
+            showError(
+                true,
+                "Unable to prepare this audio: ${
+                    error.message ?: "Unknown error"
+                }"
+            )
+        }
+    }
+
+    /*
+     * ------------------------------------------------------------
+     * PLAY
+     * ------------------------------------------------------------
+     */
+
+    private fun playAudio() {
+
+        val player = mediaPlayer
+
+        if (player == null) {
+
+            loadAudio()
+
+            return
+        }
+
+        try {
+
+            if (!player.isPlaying) {
+
+                player.start()
+
+                binding.playerBar.isPlaying = true
+
+                showError(false)
+
+                startProgressUpdates()
             }
 
         } catch (error: Exception) {
 
             binding.playerBar.isPlaying = false
 
-            Toast.makeText(
-                requireContext(),
-                "Audio error: ${error.message}",
-                Toast.LENGTH_LONG
-            ).show()
+            showError(
+                true,
+                "Unable to start playback: ${
+                    error.message ?: "Unknown error"
+                }"
+            )
         }
     }
+
+    /*
+     * ------------------------------------------------------------
+     * PAUSE
+     * ------------------------------------------------------------
+     */
 
     private fun pauseAudio() {
 
-        mediaPlayer?.pause()
+        try {
 
-        handler.removeCallbacks(
-            progressRunnable
-        )
+            mediaPlayer?.let {
+
+                if (it.isPlaying) {
+                    it.pause()
+                }
+            }
+
+        } catch (_: Exception) {
+        }
 
         binding.playerBar.isPlaying = false
+
+        stopProgressUpdates()
     }
+
+    /*
+     * ------------------------------------------------------------
+     * PROGRESS
+     * ------------------------------------------------------------
+     */
 
     private fun startProgressUpdates() {
 
-        handler.removeCallbacks(
-            progressRunnable
+        handler.removeCallbacks(progressUpdater)
+
+        handler.post(progressUpdater)
+    }
+
+    private fun stopProgressUpdates() {
+
+        handler.removeCallbacks(progressUpdater)
+    }
+
+    private fun updateProgress(player: MediaPlayer) {
+
+        if (player.duration <= 0) return
+
+        val elapsed =
+            player.currentPosition / 1000
+
+        val duration =
+            player.duration / 1000
+
+        totalSeconds = duration
+
+        binding.playerBar.setElapsed(
+            formatTime(elapsed)
         )
 
-        handler.post(
-            progressRunnable
+        binding.playerBar.setTotal(
+            formatTime(duration)
         )
+
+        binding.playerBar.playbackProgress =
+            player.currentPosition.toFloat() /
+                    player.duration.toFloat()
     }
+
+    /*
+     * ------------------------------------------------------------
+     * FINISH TRACK
+     * ------------------------------------------------------------
+     */
 
     private fun finishTrack() {
 
-        if (sessionCompleted) {
-            return
-        }
+        stopProgressUpdates()
+
+        binding.playerBar.isPlaying = false
+
+        binding.playerBar.playbackProgress = 1f
+
+        binding.playerBar.setElapsed(
+            formatTime(totalSeconds)
+        )
+
+        if (sessionCompleted) return
+
+        val userId =
+            FirebaseAuth.getInstance()
+                .currentUser
+                ?.uid
+                ?: return
+
+        /*
+         * Prevent duplicate completion events.
+         */
 
         sessionCompleted = true
 
@@ -375,57 +589,205 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         binding.playerPointsToast.isVisible = true
 
-        val userId =
-            FirebaseAuth
-                .getInstance()
-                .currentUser
-                ?.uid
-                ?: return
-
-        val durationSeconds =
-            mediaPlayer
-                ?.duration
-                ?.div(1000)
-                ?: 0
+        /*
+         * Save the Firebase AudioContent ID.
+         *
+         * The Firebase Function awards the actual +20 points.
+         */
 
         repository.saveAudioSession(
             AudioSession(
-                sessionId = UUID.randomUUID().toString(),
+                sessionId = sessionId,
                 userId = userId,
                 audioId = audioId,
                 completed = true,
-                durationSeconds = durationSeconds
+                durationSeconds = totalSeconds,
+                pointsAwarded = false
             )
+        ).addOnFailureListener {
+
+            /*
+             * Do NOT award points locally.
+             *
+             * Firebase Functions remains the source of truth
+             * for the +20 points.
+             */
+        }
+    }
+
+    /*
+     * ------------------------------------------------------------
+     * SLEEP TIMER
+     * ------------------------------------------------------------
+     */
+
+    private fun setupSleepTimer(choice: String) {
+
+        /*
+         * Cancel previous timer.
+         */
+
+        sleepTimerRunnable?.let {
+
+            handler.removeCallbacks(it)
+        }
+
+        sleepTimerRunnable = null
+
+        val minutes =
+            when (choice) {
+
+                "15 minutes" -> 15
+
+                "30 minutes" -> 30
+
+                "45 minutes" -> 45
+
+                "1 hour" -> 60
+
+                else -> null
+            }
+
+        if (minutes == null) return
+
+        val runnable = Runnable {
+
+            pauseAudio()
+
+            binding.playerSleepTimerNote.text =
+                "Sleep timer finished. Playback has stopped."
+        }
+
+        sleepTimerRunnable = runnable
+
+        handler.postDelayed(
+            runnable,
+            minutes * 60_000L
         )
     }
 
-    private fun formatTime(
-        seconds: Int
-    ): String {
+    /*
+     * ------------------------------------------------------------
+     * LOADING / ERROR UI
+     * ------------------------------------------------------------
+     */
+
+    private fun showLoading(show: Boolean) {
+
+        if (_binding == null) return
+
+        binding.playerLoading.isVisible = show
+
+        if (show) {
+            binding.playerError.isVisible = false
+        }
+    }
+
+    private fun showError(
+        show: Boolean,
+        message: String = "Unable to play this audio."
+    ) {
+
+        if (_binding == null) return
+
+        binding.playerError.text = message
+
+        binding.playerError.isVisible = show
+
+        if (show) {
+            binding.playerLoading.isVisible = false
+        }
+    }
+
+    /*
+     * ------------------------------------------------------------
+     * RELEASE MEDIA PLAYER
+     * ------------------------------------------------------------
+     */
+
+    private fun releasePlayer() {
+
+        stopProgressUpdates()
+
+        try {
+            mediaPlayer?.stop()
+        } catch (_: Exception) {
+        }
+
+        try {
+            mediaPlayer?.reset()
+        } catch (_: Exception) {
+        }
+
+        try {
+            mediaPlayer?.release()
+        } catch (_: Exception) {
+        }
+
+        mediaPlayer = null
+    }
+
+    /*
+     * ------------------------------------------------------------
+     * DURATION HELPERS
+     * ------------------------------------------------------------
+     */
+
+    private fun parseDuration(value: String): Int? {
+
+        val parts = value.split(":")
+
+        if (parts.size != 2) return null
+
+        val minutes =
+            parts[0].toIntOrNull()
+                ?: return null
+
+        val seconds =
+            parts[1].toIntOrNull()
+                ?: return null
+
+        return minutes * 60 + seconds
+    }
+
+    private fun formatTime(seconds: Int): String {
 
         val safeSeconds =
             seconds.coerceAtLeast(0)
 
-        val minutes =
-            safeSeconds / 60
-
-        val remainingSeconds =
-            safeSeconds % 60
-
         return "%d:%02d".format(
-            minutes,
-            remainingSeconds
+            safeSeconds / 60,
+            safeSeconds % 60
         )
+    }
+
+    /*
+     * ------------------------------------------------------------
+     * LIFECYCLE
+     * ------------------------------------------------------------
+     */
+
+    override fun onPause() {
+
+        super.onPause()
+
+        /*
+         * Stop playback when leaving the screen.
+         */
+
+        pauseAudio()
     }
 
     override fun onDestroyView() {
 
-        handler.removeCallbacks(
-            progressRunnable
-        )
+        sleepTimerRunnable?.let {
 
-        mediaPlayer?.release()
-        mediaPlayer = null
+            handler.removeCallbacks(it)
+        }
+
+        sleepTimerRunnable = null
+
+        releasePlayer()
 
         _binding = null
 

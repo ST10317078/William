@@ -347,6 +347,44 @@ class FirebaseWellnessRepository(
             }
     }
 
+    fun deleteAudioContent(
+        audioId: String,
+        storagePath: String,
+        onSuccess: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val firestoreRef = firestore
+            .collection(FirestoreCollections.AUDIO_CONTENT)
+            .document(audioId)
+
+        val storageRef = storage.reference.child(storagePath)
+
+        // Delete the Storage file first.
+        storageRef.delete()
+            .addOnSuccessListener {
+
+                // Then delete the Firestore metadata.
+                firestoreRef.delete()
+                    .addOnSuccessListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener { error ->
+                        onError(error)
+                    }
+            }
+            .addOnFailureListener { storageError ->
+
+                // If the Storage file is already gone, still remove
+                // the Firestore document.
+                firestoreRef.delete()
+                    .addOnSuccessListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener { firestoreError ->
+                        onError(firestoreError)
+                    }
+            }
+    }
     fun getAudioDownloadUrl(
         storagePath: String,
         onSuccess: (String) -> Unit,
