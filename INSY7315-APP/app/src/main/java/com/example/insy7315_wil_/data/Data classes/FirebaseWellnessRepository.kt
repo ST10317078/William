@@ -1,6 +1,7 @@
 package com.example.insy7315_wil_.data.`Data classes`
 
 import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -13,11 +14,17 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.Timestamp
 import java.util.Date
+import android.net.Uri
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.functions.FirebaseFunctions
+
 
 /** Firebase data-access boundary used by the app screens and future view models. */
 class FirebaseWellnessRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance(),
+    private val storage: FirebaseStorage = FirebaseStorage.getInstance(),
+    private val functions: FirebaseFunctions = FirebaseFunctions.getInstance("africa-south1"),
 ) {
     fun observeSucculentState(userId: String, onState: (SucculentState) -> Unit, onError: (Exception) -> Unit = {}): ListenerRegistration =
         firestore.collection(FirestoreCollections.SUCCULENT_STATE).document(requireUserId(userId)).addSnapshotListener { snapshot, error ->
@@ -43,6 +50,28 @@ class FirebaseWellnessRepository(
 
     fun currentUserId(): String? = auth.currentUser?.uid
 
+    fun checkAdmin(
+        onResult: (Boolean) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        val uid = auth.currentUser?.uid
+
+        if (uid == null) {
+            onResult(false)
+            return
+        }
+
+        firestore.collection(FirestoreCollections.ADMIN)
+            .document(uid)
+            .get()
+            .addOnSuccessListener { document ->
+                onResult(document.exists())
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
+
     fun saveUserProfile(profile: UserProfile): Task<Void> =
         firestore.collection(FirestoreCollections.USER_PROFILE).document(profile.userId).set(
             mapOf(
@@ -53,6 +82,7 @@ class FirebaseWellnessRepository(
                 "remindersEnabled" to profile.remindersEnabled,
                 "sharesAnonymousInsights" to profile.sharesAnonymousInsights,
                 "activityProgressVisible" to profile.activityProgressVisible,
+                "active" to profile.active,
                 "createdAt" to (profile.createdAtMillis?.let(::Date) ?: Date()),
             ),
             SetOptions.merge(),
@@ -85,8 +115,45 @@ class FirebaseWellnessRepository(
         remindersEnabled = document.getBoolean("remindersEnabled") ?: true,
         sharesAnonymousInsights = document.getBoolean("sharesAnonymousInsights") ?: true,
         activityProgressVisible = document.getBoolean("activityProgressVisible") ?: true,
+        active = document.getBoolean("active") ?: true,
         createdAtMillis = document.getTimestamp("createdAt")?.toDate()?.time,
     )
+
+    fun loadAllUsers(
+        onSuccess: (List<UserProfile>) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        firestore.collection(FirestoreCollections.USER_PROFILE)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val users = snapshot.documents.map { document ->
+                    toUserProfile(document)
+                }
+
+                onSuccess(users)
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
+
+    fun setUserActive(
+        userId: String,
+        active: Boolean,
+        onSuccess: () -> Unit = {},
+        onError: (Exception) -> Unit = {}
+    ) {
+        firestore.collection(FirestoreCollections.USER_PROFILE)
+            .document(userId)
+            .update("active", active)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
+
 
     fun addMoodEntry(entry: MoodEntry): Task<DocumentReference> {
         requireValid(WellnessValidation.mood(entry.moodLevel, entry.note))
@@ -181,8 +248,9 @@ class FirebaseWellnessRepository(
     fun observeJournalEntries(userId: String): Task<QuerySnapshot> =
         firestore.collection(FirestoreCollections.JOURNAL_ENTRY).whereEqualTo("userId", requireUserId(userId)).get()
 
-    fun saveAudioSession(session: AudioSession): Task<Void> =
-        firestore.collection(FirestoreCollections.AUDIO_SESSION).document(session.sessionId.ifBlank { firestore.collection(FirestoreCollections.AUDIO_SESSION).document().id })
+    fun saveAudioSession(session: AudioSession): Task<Void> {
+        requireValid(WellnessValidation.audio(session.audioId, session.durationSeconds))
+        return firestore.collection(FirestoreCollections.AUDIO_SESSION).document(session.sessionId.ifBlank { firestore.collection(FirestoreCollections.AUDIO_SESSION).document().id })
             .set(
                 mapOf(
                     "userId" to requireUserId(session.userId),
@@ -193,27 +261,247 @@ class FirebaseWellnessRepository(
                 ),
                 SetOptions.merge(),
             )
+    }
 
-    fun saveQuizResult(result: QuizResult): Task<DocumentReference> {
-        requireValid(WellnessValidation.quizAnswers(result.scores.mapValues { it.value.toString() }))
-        return firestore.collection(FirestoreCollections.QUIZ_RESULTS).add(
-            mapOf(
-                "userId" to requireUserId(result.userId),
-                "quizId" to result.quizId,
-                "recommendedCategoryId" to result.recommendedCategoryId,
-                "scores" to result.scores,
-                "createdAt" to Date(),
-            ),
+    // The function scores the answers and saves the quizResults document itself
+    fun calculateQuizRecommendation(quizId: String, answers: Map<String, Int>): Task<QuizRecommendation> {
+        requireValid(WellnessValidation.quizAnswers(answers.mapValues { it.value.toString() }))
+        return functions.getHttpsCallable("calculateQuizRecommendation")
+            .call(mapOf("quizId" to quizId, "answers" to answers))
+            .onSuccessTask { result -> Tasks.forResult(toQuizRecommendation(result.getData() as? Map<*, *>)) }
+    }
+
+    private fun toQuizRecommendation(data: Map<*, *>?): QuizRecommendation {
+        val audio = data?.get("audio") as? Map<*, *>
+        return QuizRecommendation(
+            resultId = data?.get("resultId") as? String ?: "",
+            categoryId = data?.get("categoryId") as? String ?: "",
+            categoryName = data?.get("categoryName") as? String ?: "",
+            categoryDescription = data?.get("categoryDescription") as? String ?: "",
+            audio = audio?.let {
+                AudioContent(
+                    audioId = it["audioId"] as? String ?: "",
+                    title = it["title"] as? String ?: "",
+                    category = it["category"] as? String ?: "",
+                    storagePath = it["storagePath"] as? String ?: "",
+                    downloadUrl = it["downloadUrl"] as? String ?: "",
+                    durationSeconds = (it["durationSeconds"] as? Number)?.toInt() ?: 0,
+                )
+            },
         )
     }
 
+    fun uploadAudioContent(
+        uri: Uri,
+        title: String,
+        category: String,
+        categoryId: String,
+        broadcastDate: String,
+        onSuccess: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val audioRef = firestore
+            .collection(FirestoreCollections.AUDIO_CONTENT)
+            .document()
+
+        val audioId = audioRef.id
+
+        val storagePath = "audio/$audioId"
+
+        val storageRef = storage.reference.child(storagePath)
+
+        storageRef.putFile(uri)
+            .continueWithTask { uploadTask ->
+                if (!uploadTask.isSuccessful) {
+                    throw uploadTask.exception
+                        ?: Exception("Audio upload failed")
+                }
+
+                storageRef.downloadUrl
+            }
+            .addOnSuccessListener { downloadUri ->
+
+                val audio = mapOf(
+                    "audioId" to audioId,
+                    "title" to title,
+                    "description" to "",
+                    "category" to category,
+                    "categoryId" to categoryId,
+                    "broadcastDate" to broadcastDate,
+                    "storagePath" to storagePath,
+                    "downloadUrl" to downloadUri.toString(),
+                    "durationSeconds" to 0,
+                    "active" to true
+
+                )
+
+                audioRef.set(audio)
+                    .addOnSuccessListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener { error ->
+                        onError(error)
+                    }
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
+
+    fun deleteAudioContent(
+        audioId: String,
+        storagePath: String,
+        onSuccess: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val firestoreRef = firestore
+            .collection(FirestoreCollections.AUDIO_CONTENT)
+            .document(audioId)
+
+        val storageRef = storage.reference.child(storagePath)
+
+        // Delete the Storage file first.
+        storageRef.delete()
+            .addOnSuccessListener {
+
+                // Then delete the Firestore metadata.
+                firestoreRef.delete()
+                    .addOnSuccessListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener { error ->
+                        onError(error)
+                    }
+            }
+            .addOnFailureListener { storageError ->
+
+                // If the Storage file is already gone, still remove
+                // the Firestore document.
+                firestoreRef.delete()
+                    .addOnSuccessListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener { firestoreError ->
+                        onError(firestoreError)
+                    }
+            }
+    }
+    fun getAudioDownloadUrl(
+        storagePath: String,
+        onSuccess: (String) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        storage.reference
+            .child(storagePath)
+            .downloadUrl
+            .addOnSuccessListener { uri ->
+                onSuccess(uri.toString())
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
+
+    fun createBroadcast(
+        title: String,
+        message: String,
+        publishedAtMillis: Long?,
+        onSuccess: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val ref =
+            firestore.collection(FirestoreCollections.BROADCAST)
+                .document()
+
+        val data = mapOf(
+            "broadcastId" to ref.id,
+            "title" to title,
+            "message" to message,
+            "publishedAtMillis" to publishedAtMillis
+        )
+
+        ref.set(data)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
+
+    fun addAffirmation(
+        text: String,
+        onSuccess: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val ref =
+            firestore.collection(FirestoreCollections.AFFIRMATION)
+                .document()
+
+        val data = mapOf(
+            "affirmationId" to ref.id,
+            "text" to text,
+            "category" to "motivation"
+        )
+
+        ref.set(data)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
+    fun loadAudioSessions(
+        userId: String,
+        onSuccess: (Int) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        firestore
+            .collection(FirestoreCollections.AUDIO_SESSION)
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                onSuccess(snapshot.size())
+            }
+            .addOnFailureListener { error ->
+                onError(error)
+            }
+    }
     fun loadAudioContent(): Task<QuerySnapshot> =
         firestore.collection(FirestoreCollections.AUDIO_CONTENT)
             .whereEqualTo("active", true)
             .get()
 
+    fun toAudioContent(document: DocumentSnapshot): AudioContent = AudioContent(
+        audioId = document.id,
+        title = document.getString("title").orEmpty(),
+        description = document.getString("description").orEmpty(),
+        category = document.getString("category").orEmpty(),
+        categoryId = document.getString("categoryId").orEmpty(),
+        storagePath = document.getString("storagePath").orEmpty(),
+        downloadUrl = document.getString("downloadUrl").orEmpty(),
+        durationSeconds = document.getLong("durationSeconds")?.toInt() ?: 0,
+        active = document.getBoolean("active") ?: true,
+    )
+
+    // newest first matches how the history screen lists past broadcasts
+    // field is publishedAt, not publishedAtMillis with FirestoreCollectionSchemas in mind
     fun loadBroadcasts(): Task<QuerySnapshot> =
-        firestore.collection(FirestoreCollections.BROADCAST).get()
+        firestore.collection(FirestoreCollections.BROADCAST)
+            .orderBy("publishedAt", Query.Direction.DESCENDING)
+            .get()
+
+    fun toBroadcast(document: DocumentSnapshot): Broadcast = Broadcast(
+        broadcastId = document.id,
+        title = document.getString("title").orEmpty(),
+        message = document.getString("message").orEmpty(),
+        publishedAtMillis = document.getTimestamp("publishedAt")?.toDate()?.time,
+    )
+
+    // Written every night by the refreshDailyAffirmation function
+    fun loadDailyAffirmation(): Task<DocumentSnapshot> =
+        firestore.collection(FirestoreCollections.DAILY_BROADCAST).document("current").get()
 
     fun loadRelaxationTracks(): Task<QuerySnapshot> =
         firestore.collection(FirestoreCollections.RELAXATION_TRACKS).get()
@@ -221,13 +509,42 @@ class FirebaseWellnessRepository(
     fun loadMeditationCategories(): Task<QuerySnapshot> =
         firestore.collection(FirestoreCollections.MEDITATION_CATEGORY).get()
 
+    fun toMeditationCategory(document: DocumentSnapshot): MeditationCategory = MeditationCategory(
+        categoryId = document.id,
+        name = document.getString("name").orEmpty().ifBlank { document.id },
+        description = document.getString("description").orEmpty(),
+        recommendedFor = document.getString("recommendedFor").orEmpty(),
+    )
+
     fun loadQuizzes(): Task<QuerySnapshot> =
         firestore.collection(FirestoreCollections.QUIZZES).get()
 
-    fun loadQuizQuestions(quizId: String): Task<QuerySnapshot> =
+    fun loadQuizQuestions(
+        quizId: String,
+        onQuestions: (List<QuizQuestion>) -> Unit,
+        onError: (Exception) -> Unit = {},
+    ) {
         firestore.collection(FirestoreCollections.QUIZ_QUESTIONS)
             .whereEqualTo("quizId", quizId)
             .get()
+            .addOnSuccessListener { snapshot ->
+                // Skips half-typed questions from the console
+                val questions = snapshot.documents.map(::toQuizQuestion)
+                    .filter { it.options.isNotEmpty() && it.options.size == it.categoryIds.size }
+                onQuestions(questions.sortedBy { it.order })
+            }
+            .addOnFailureListener(onError)
+    }
+
+    private fun toQuizQuestion(document: DocumentSnapshot): QuizQuestion = QuizQuestion(
+        questionId = document.id,
+        quizId = document.getString("quizId").orEmpty(),
+        questionText = document.getString("questionText").orEmpty(),
+        options = (document.get("options") as? List<*>).orEmpty().map { it.toString() },
+        categoryIds = (document.get("categoryIds") as? List<*>).orEmpty().map { it.toString() },
+        weight = document.getLong("weight")?.toInt() ?: 1,
+        order = document.getLong("order")?.toInt() ?: 0,
+    )
 
     private fun requireUserId(userId: String): String {
         check(userId.isNotBlank()) { "A signed-in user ID is required." }

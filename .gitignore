@@ -33,3 +33,10 @@ firebase/rules-tests/node_modules/
 Thumbs.db
 *.swp
 *.swo
+# Android Studio settings
+.idea/
+
+# Google Cloud deployment credentials
+github-actions-deployer*.json
+*-service-account*.json
+service-account*.json

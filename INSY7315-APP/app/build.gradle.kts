@@ -38,6 +38,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    testOptions {
+        // FirebaseAuthException calls TextUtils in its constructor, which throws in unit tests otherwise
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -51,6 +55,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.functions)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.common)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
