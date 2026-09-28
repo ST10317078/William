@@ -1,4 +1,4 @@
-# Sgula
+# Sgula — INSY7315 Task 2
 
 INSY7315: Information Systems 3E, Work Integrated Learning
 
@@ -16,7 +16,62 @@ Group 1
 | 4 | David Botha | ST10446408 |
 | 5 | Cherubim Estologa | ST10443277 |
 
+## Repository structure
+
+| Path | Purpose |
+|---|---|
+| `INSY7315-APP` | Kotlin Android application for members, guests and administrators. |
+| `INSY7315-WEBSITE` | .NET 8 ASP.NET Core MVC marketing website. |
+| `functions` | TypeScript Firebase Cloud Functions and seed data. |
+| `firebase` | Firestore security rules and composite indexes. |
+| `docs/architecture.md` | Final solution architecture and request flows. |
+| `docs/database-design.md` | Firestore collections, fields, relationships and access rules. |
+
 ## How to run
+
+### Prerequisites
+
+- Android Studio with an Android 15 (API 35) or newer emulator/device.
+- JDK 21 (the Gradle wrapper is used by the Android project).
+- .NET 8 SDK for the marketing website.
+- Node.js 20 and the Firebase CLI for the backend.
+- Access to the Firebase project `sgula-task2-insy7315`.
+
+### Firebase/backend
+
+The Android app uses Firebase Authentication, Cloud Firestore, Cloud Storage and callable
+Cloud Functions. Firebase configuration is intentionally not committed. Obtain the project's
+`google-services.json` and save it as `INSY7315-APP/app/google-services.json` before building the
+Android app.
+
+From the repository root:
+
+```powershell
+cd functions
+npm ci
+npm run build
+cd ..
+firebase emulators:start --only functions,firestore
+```
+
+The emulator UI is available at `http://127.0.0.1:4000` when the Firebase CLI starts it. To
+deploy rules, indexes and functions to the configured project:
+
+```powershell
+firebase login
+firebase use sgula-task2-insy7315
+firebase deploy --only functions,firestore:rules,firestore:indexes
+```
+
+The quiz seed writes categories and questions to the configured Firebase project. Authenticate
+Application Default Credentials first, then run it from `functions`:
+
+```powershell
+gcloud auth application-default login
+cd functions
+npm run seed
+```
+
 
 ### Android application
 
@@ -25,10 +80,9 @@ Group 1
    wrapper downloads Gradle before it can build.
 3. Pick a device or emulator running Android 15 (API 35) or higher and press Run.
 
-**Signing in: authentication is a local prototype session rather than a live backend, so any
-correctly formatted email address and any non-empty password will log you in.** Creating an account
-works the same way and also sets the name shown on the profile screen. Choosing "Continue as
-guest" locks the member-only screens until you log out from Settings.
+**Signing in:** registered users authenticate through Firebase Authentication. Creating an account
+also creates the matching `UserProfile/{uid}` document. Choosing "Continue as guest" allows public
+content while member-only screens remain locked until the user signs in.
 
 ### Website
 
@@ -37,6 +91,20 @@ guest" locks the member-only screens until you log out from Settings.
 
 The Google Play button currently points at a placeholder URL because the app has not been
 published.
+
+### Website from the command line
+
+```powershell
+dotnet run --project INSY7315-WEBSITE/INSY7315-WEBSITE/INSY7315-WEBSITE.csproj
+```
+
+The website is an informative ASP.NET Core MVC site. It does not read or write Firebase data.
+
+## Architecture and database design
+
+The final architecture diagram and the main runtime flows are documented in
+[docs/architecture.md](docs/architecture.md). The Firestore collection design, relationships,
+indexes and security boundaries are documented in [docs/database-design.md](docs/database-design.md).
 
 ## Making a user an admin
 
@@ -100,4 +168,25 @@ Branch names:
 
 Open a pull request into `develop` once a branch is ready. Merge `develop` into `main` only when a
 batch of finished work is ready to be treated as done.
+
+## Pull request and review process
+
+1. Once a team member has finished working on a branch, we first pull `develop` into it to get any changes.
+2. We check that the app still builds and runs on an emulator or Android device.
+3. We open a pull request into `develop`, say what it changes, and which Jira tickets it covers.
+4. Another team member reads over the changes. Anything that needs fixing goes in a comment on the
+   pull request, and the author pushes the fix to the same branch.
+5. Once it has been read over and the GitHub Actions checks pass, it gets merged into `develop`.
+
+## Continuous integration
+
+GitHub Actions runs the workflows in `.github/workflows` on every pull request and push to `develop`
+or `main`.
+
+- `android.yml` builds the app and runs the unit tests.
+- `website.yml` builds the website.
+
+`google-services.json` is not committed, so the Android workflow reads it from a repository secret
+called `GOOGLE_SERVICES_JSON`. It is set under **Settings → Secrets and variables → Actions**, and
+its value is the whole contents of `INSY7315-APP/app/google-services.json`.
 
